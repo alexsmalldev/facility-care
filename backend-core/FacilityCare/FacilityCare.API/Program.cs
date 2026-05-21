@@ -43,6 +43,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IBuildingService, BuildingService>();
 
 var app = builder.Build();
 
