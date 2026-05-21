@@ -1,8 +1,8 @@
 ﻿using FacilityCare.Application.Common.Interfaces;
 using FacilityCare.Application.DTOs.Auth;
+using FacilityCare.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -12,10 +12,10 @@ namespace FacilityCare.Infrastructure.Services;
 
 public class AuthService : IAuthService
 {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly IConfiguration _configuration;
 
-    public AuthService(UserManager<IdentityUser> userManager, IConfiguration configuration)
+    public AuthService(UserManager<ApplicationUser> userManager, IConfiguration configuration)
     {
         _userManager = userManager;
         _configuration = configuration;
@@ -27,10 +27,12 @@ public class AuthService : IAuthService
         if (existingUser != null)
             throw new Exception("Username already exists");
 
-        var user = new IdentityUser
+        var user = new ApplicationUser
         {
             UserName = request.Username,
-            Email = request.Email
+            Email = request.Email,
+            FirstName = request.FirstName,
+            LastName = request.LastName
         };
 
         var result = await _userManager.CreateAsync(user, request.Password);
@@ -83,7 +85,7 @@ public class AuthService : IAuthService
         return (new AuthResponse
         {
             Access = GenerateAccessToken(user, roles),
-            Message = "Success."
+            Message = "Token refreshed successfully."
         }, newRefreshToken);
     }
 
@@ -98,18 +100,20 @@ public class AuthService : IAuthService
             throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
     }
 
-    private string GenerateAccessToken(IdentityUser user, IList<string> roles)
+    private string GenerateAccessToken(ApplicationUser user, IList<string> roles)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var claims = new List<Claim>
-    {
-        new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Sub, user.Id),
-        new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.UniqueName, user.UserName!),
-        new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
-        new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-    };
+        {
+            new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Sub, user.Id),
+            new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.UniqueName, user.UserName!),
+            new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
+            new Claim(Microsoft.IdentityModel.JsonWebTokens.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim("first_name", user.FirstName),
+            new Claim("last_name", user.LastName)
+        };
 
         foreach (var role in roles)
             claims.Add(new Claim(ClaimTypes.Role, role));
@@ -125,16 +129,17 @@ public class AuthService : IAuthService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    private async Task<string> GenerateRefreshTokenAsync(IdentityUser user)
+    private async Task<string> GenerateRefreshTokenAsync(ApplicationUser user)
     {
         var refreshToken = Guid.NewGuid().ToString();
         await _userManager.SetAuthenticationTokenAsync(user, "FacilityCare", "RefreshToken", refreshToken);
         return refreshToken;
     }
 
-    private async Task<IdentityUser?> FindUserByRefreshTokenAsync(string refreshToken)
+    private async Task<ApplicationUser?> FindUserByRefreshTokenAsync(string refreshToken)
     {
-        foreach (var user in _userManager.Users)
+        var users = _userManager.Users.ToList();
+        foreach (var user in users)
         {
             var token = await _userManager.GetAuthenticationTokenAsync(user, "FacilityCare", "RefreshToken");
             if (token == refreshToken)

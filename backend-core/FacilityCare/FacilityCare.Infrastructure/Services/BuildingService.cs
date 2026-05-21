@@ -11,9 +11,9 @@ namespace FacilityCare.Infrastructure.Services;
 public class BuildingService : IBuildingService
 {
     private readonly AppDbContext _context;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public BuildingService(AppDbContext context, UserManager<IdentityUser> userManager)
+    public BuildingService(AppDbContext context, UserManager<ApplicationUser> userManager)
     {
         _context = context;
         _userManager = userManager;
@@ -119,6 +119,8 @@ public class BuildingService : IBuildingService
                 Id = user.Id,
                 Username = user.UserName!,
                 Email = user.Email!,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 Roles = roles
             });
         }
@@ -179,6 +181,8 @@ public class BuildingService : IBuildingService
                     Id = user.Id,
                     Username = user.UserName!,
                     Email = user.Email!,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
                     Roles = roles
                 });
         }

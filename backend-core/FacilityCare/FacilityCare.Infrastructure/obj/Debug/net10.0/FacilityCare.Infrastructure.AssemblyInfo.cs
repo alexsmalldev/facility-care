@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FacilityCare.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6339d5d4bb11c33e287d08d606b6d933caccc3bb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5467c586ee1d2429397a01e7c1635c897af9a717")]
 [assembly: System.Reflection.AssemblyProductAttribute("FacilityCare.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FacilityCare.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

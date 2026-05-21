@@ -10,14 +10,14 @@ namespace FacilityCare.Application.Tests.Services;
 
 public class BuildingServiceTests
 {
-    private readonly Mock<UserManager<IdentityUser>> _userManagerMock;
+    private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
     private readonly AppDbContext _context;
     private readonly BuildingService _buildingService;
 
     public BuildingServiceTests()
     {
-        _userManagerMock = new Mock<UserManager<IdentityUser>>(
-            Mock.Of<IUserStore<IdentityUser>>(), null, null, null, null, null, null, null, null);
+        _userManagerMock = new Mock<UserManager<ApplicationUser>>(
+            Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
 
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
@@ -193,7 +193,7 @@ public class BuildingServiceTests
     public async Task UpdateBuildingUsersAsync_WithInvalidUserId_ThrowsException()
     {
         _userManagerMock.Setup(u => u.FindByIdAsync("invalid-id"))
-            .ReturnsAsync((IdentityUser?)null);
+            .ReturnsAsync((ApplicationUser?)null);
 
         await Assert.ThrowsAsync<Exception>(() =>
             _buildingService.UpdateBuildingUsersAsync(1, new UpdateBuildingUsersRequest
@@ -205,7 +205,7 @@ public class BuildingServiceTests
     [Fact]
     public async Task UpdateBuildingUsersAsync_WithValidUserIds_UpdatesUsers()
     {
-        var user = new IdentityUser { Id = "new-user-id", UserName = "newuser" };
+        var user = new ApplicationUser { Id = "new-user-id", UserName = "newuser" };
         _userManagerMock.Setup(u => u.FindByIdAsync("new-user-id"))
             .ReturnsAsync(user);
 

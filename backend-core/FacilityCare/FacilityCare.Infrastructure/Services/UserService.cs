@@ -8,10 +8,10 @@ namespace FacilityCare.Infrastructure.Services;
 
 public class UserService : IUserService
 {
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly AppDbContext _context;
 
-    public UserService(UserManager<IdentityUser> userManager, AppDbContext context)
+    public UserService(UserManager<ApplicationUser> userManager, AppDbContext context)
     {
         _userManager = userManager;
         _context = context;
@@ -24,7 +24,9 @@ public class UserService : IUserService
         if (!string.IsNullOrEmpty(query))
             users = users.Where(u =>
                 u.UserName!.Contains(query) ||
-                u.Email!.Contains(query));
+                u.Email!.Contains(query) ||
+                u.FirstName.Contains(query) ||
+                u.LastName.Contains(query));
 
         var userList = await users.ToListAsync();
         var result = new List<UserDto>();
@@ -54,11 +56,10 @@ public class UserService : IUserService
         if (user == null)
             throw new Exception("User not found");
 
-        if (!string.IsNullOrEmpty(request.Username))
-            user.UserName = request.Username;
-
-        if (!string.IsNullOrEmpty(request.Email))
-            user.Email = request.Email;
+        if (!string.IsNullOrEmpty(request.Username)) user.UserName = request.Username;
+        if (!string.IsNullOrEmpty(request.Email)) user.Email = request.Email;
+        if (!string.IsNullOrEmpty(request.FirstName)) user.FirstName = request.FirstName;
+        if (!string.IsNullOrEmpty(request.LastName)) user.LastName = request.LastName;
 
         var result = await _userManager.UpdateAsync(user);
         if (!result.Succeeded)
@@ -96,8 +97,7 @@ public class UserService : IUserService
         if (buildings.Count != request.BuildingIds.Count)
             throw new Exception("One or more buildings do not exist");
 
-        var existingAssignments = _context.BuildingUsers
-            .Where(bu => bu.UserId == userId);
+        var existingAssignments = _context.BuildingUsers.Where(bu => bu.UserId == userId);
         _context.BuildingUsers.RemoveRange(existingAssignments);
 
         foreach (var building in buildings)
@@ -151,11 +151,13 @@ public class UserService : IUserService
         return result;
     }
 
-    private static UserDto MapToDto(IdentityUser user, IList<string> roles) => new()
+    private static UserDto MapToDto(ApplicationUser user, IList<string> roles) => new()
     {
         Id = user.Id,
         Username = user.UserName!,
         Email = user.Email!,
+        FirstName = user.FirstName,
+        LastName = user.LastName,
         Roles = roles
     };
 }
