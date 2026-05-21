@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="FacilityCare.Application/FacilityCare.Application.csproj" />
+  <Project Path="FacilityCare.Domain/FacilityCare.Domain.csproj" />
+  <Project Path="FacilityCare.Infrastructure/FacilityCare.Infrastructure.csproj" />
+  <Project Path="WebApplication1/FacilityCare.API.csproj" />
+</Solution>
