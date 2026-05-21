@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.infrastructure\\persistance\\dbseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|solutionrelative:facilitycare.infrastructure\\persistance\\dbseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{44A6E586-FD1A-70FF-A558-A653135E2BDE}|FacilityCare.API\\FacilityCare.API.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{44A6E586-FD1A-70FF-A558-A653135E2BDE}|FacilityCare.API\\FacilityCare.API.csproj|solutionrelative:facilitycare.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.infrastructure\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|solutionrelative:facilitycare.infrastructure\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B845AF50-C41E-4DA6-B61D-941257365BD5}|FacilityCare.Application.Tests\\FacilityCare.Application.Tests.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.application.tests\\services\\authservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B845AF50-C41E-4DA6-B61D-941257365BD5}|FacilityCare.Application.Tests\\FacilityCare.Application.Tests.csproj|solutionrelative:facilitycare.application.tests\\services\\authservicetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{44A6E586-FD1A-70FF-A558-A653135E2BDE}|FacilityCare.API\\FacilityCare.API.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.api\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{44A6E586-FD1A-70FF-A558-A653135E2BDE}|FacilityCare.API\\FacilityCare.API.csproj|solutionrelative:facilitycare.api\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -32,35 +32,35 @@
               "RelativeDocumentMoniker": "FacilityCare.Infrastructure\\Services\\AuthService.cs",
               "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Services\\AuthService.cs",
               "RelativeToolTip": "FacilityCare.Infrastructure\\Services\\AuthService.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAowEIAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T10:16:42.716Z",
+              "WhenOpened": "2026-05-21T10:53:49.687Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "DbSeeder.cs",
-              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Persistance\\DbSeeder.cs",
-              "RelativeDocumentMoniker": "FacilityCare.Infrastructure\\Persistance\\DbSeeder.cs",
-              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Persistance\\DbSeeder.cs",
-              "RelativeToolTip": "FacilityCare.Infrastructure\\Persistance\\DbSeeder.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwCIAAABQAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.API\\Program.cs",
+              "RelativeDocumentMoniker": "FacilityCare.API\\Program.cs",
+              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.API\\Program.cs",
+              "RelativeToolTip": "FacilityCare.API\\Program.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB0AAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T10:15:18.264Z",
+              "WhenOpened": "2026-05-21T10:52:43.389Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "AuthServiceTests.cs",
-              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application.Tests\\Services\\AuthServiceTests.cs",
-              "RelativeDocumentMoniker": "FacilityCare.Application.Tests\\Services\\AuthServiceTests.cs",
-              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application.Tests\\Services\\AuthServiceTests.cs",
-              "RelativeToolTip": "FacilityCare.Application.Tests\\Services\\AuthServiceTests.cs",
-              "ViewState": "AgIAAEIAAAAAAAAAAAAYwFwAAABCAAAAAAAAAA==",
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.API\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "FacilityCare.API\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.API\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "FacilityCare.API\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAuwIYAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T10:13:43.057Z",
+              "WhenOpened": "2026-05-21T10:48:47.941Z",
               "EditorCaption": ""
             }
           ]

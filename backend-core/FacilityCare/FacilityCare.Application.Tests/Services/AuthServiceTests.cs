@@ -9,7 +9,6 @@ namespace FacilityCare.Application.Tests.Services;
 public class AuthServiceTests
 {
     private readonly Mock<UserManager<IdentityUser>> _userManagerMock;
-    private readonly Mock<IConfiguration> _configurationMock;
     private readonly AuthService _authService;
 
     public AuthServiceTests()
@@ -17,12 +16,16 @@ public class AuthServiceTests
         _userManagerMock = new Mock<UserManager<IdentityUser>>(
             Mock.Of<IUserStore<IdentityUser>>(), null, null, null, null, null, null, null, null);
 
-        _configurationMock = new Mock<IConfiguration>();
-        _configurationMock.Setup(c => c["Jwt:Key"]).Returns("this-is-a-test-secret-key-32chars!!");
-        _configurationMock.Setup(c => c["Jwt:Issuer"]).Returns("FacilityCare");
-        _configurationMock.Setup(c => c["Jwt:Audience"]).Returns("FacilityCare");
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string>
+            {
+                { "Jwt:Key", "this-is-a-test-secret-key-32chars!!" },
+                { "Jwt:Issuer", "FacilityCare" },
+                { "Jwt:Audience", "FacilityCare" }
+            }!)
+            .Build();
 
-        _authService = new AuthService(_userManagerMock.Object, _configurationMock.Object);
+        _authService = new AuthService(_userManagerMock.Object, configuration);
     }
 
     [Fact]
@@ -52,6 +55,12 @@ public class AuthServiceTests
         _userManagerMock.Setup(u => u.SetAuthenticationTokenAsync(
             It.IsAny<IdentityUser>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(IdentityResult.Success);
+
+        _userManagerMock.Setup(u => u.AddToRoleAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()))
+            .ReturnsAsync(IdentityResult.Success);
+
+        _userManagerMock.Setup(u => u.GetRolesAsync(It.IsAny<IdentityUser>()))
+            .ReturnsAsync(new List<string> { "Regular" });
 
         var (response, refreshToken) = await _authService.RegisterAsync(new RegisterRequest
         {
@@ -93,6 +102,9 @@ public class AuthServiceTests
         _userManagerMock.Setup(u => u.SetAuthenticationTokenAsync(
             It.IsAny<IdentityUser>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(IdentityResult.Success);
+
+        _userManagerMock.Setup(u => u.GetRolesAsync(It.IsAny<IdentityUser>()))
+            .ReturnsAsync(new List<string> { "Admin" });
 
         var (response, refreshToken) = await _authService.LoginAsync(new LoginRequest
         {
