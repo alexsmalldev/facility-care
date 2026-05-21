@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "U2yWOoDIkzs=",
+  "dgSpecHash": "WH0KAc7b/WA=",
   "success": true,
   "projectFilePath": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\alexs\\.nuget\\packages\\awssdk.core\\4.0.7.1\\awssdk.core.4.0.7.1.nupkg.sha512",
+    "C:\\Users\\alexs\\.nuget\\packages\\awssdk.s3\\4.0.23.3\\awssdk.s3.4.0.23.3.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\12.1.1\\fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
@@ -11,6 +13,8 @@
     "C:\\Users\\alexs\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\10.0.8\\microsoft.aspnetcore.cryptography.internal.10.0.8.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\10.0.8\\microsoft.aspnetcore.cryptography.keyderivation.10.0.8.nupkg.sha512",
+    "C:\\Users\\alexs\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.3.10\\microsoft.aspnetcore.http.abstractions.2.3.10.nupkg.sha512",
+    "C:\\Users\\alexs\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.3.9\\microsoft.aspnetcore.http.features.2.3.9.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\10.0.8\\microsoft.aspnetcore.identity.entityframeworkcore.10.0.8.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\microsoft.build.framework\\18.0.2\\microsoft.build.framework.18.0.2.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.11.0\\microsoft.codeanalysis.analyzers.3.11.0.nupkg.sha512",

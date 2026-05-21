@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "v2qr9HsfEGk=",
+  "dgSpecHash": "2XvDjhtTZnE=",
   "success": true,
   "projectFilePath": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application\\FacilityCare.Application.csproj",
   "expectedPackageFiles": [
@@ -8,8 +8,11 @@
     "C:\\Users\\alexs\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\12.1.1\\fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\mediatr\\14.1.0\\mediatr.14.1.0.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\alexs\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.3.10\\microsoft.aspnetcore.http.abstractions.2.3.10.nupkg.sha512",
+    "C:\\Users\\alexs\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.3.9\\microsoft.aspnetcore.http.features.2.3.9.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.0\\microsoft.extensions.dependencyinjection.abstractions.10.0.0.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\10.0.0\\microsoft.extensions.logging.abstractions.10.0.0.nupkg.sha512",
+    "C:\\Users\\alexs\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\microsoft.identitymodel.abstractions\\8.14.0\\microsoft.identitymodel.abstractions.8.14.0.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\8.14.0\\microsoft.identitymodel.jsonwebtokens.8.14.0.nupkg.sha512",
     "C:\\Users\\alexs\\.nuget\\packages\\microsoft.identitymodel.logging\\8.14.0\\microsoft.identitymodel.logging.8.14.0.nupkg.sha512",

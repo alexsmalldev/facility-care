@@ -44,6 +44,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBuildingService, BuildingService>();
+builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IServiceTypeService, ServiceTypeService>();
 
 var app = builder.Build();
 
@@ -56,6 +58,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseStaticFiles();
 app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
