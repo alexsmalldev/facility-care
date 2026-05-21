@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("e8e8a432-cc9d-4dc9-9fdc-83203dd945c2")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("FacilityCare.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d4da51b87b05ee70f8b96a205db28311267d409d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+48f2803336d20cf14e7ccbdeea5ee643083b40a9")]
 [assembly: System.Reflection.AssemblyProductAttribute("FacilityCare.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FacilityCare.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

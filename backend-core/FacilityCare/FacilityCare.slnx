@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+  </Folder>
   <Project Path="FacilityCare.Application/FacilityCare.Application.csproj" />
   <Project Path="FacilityCare.Domain/FacilityCare.Domain.csproj" />
   <Project Path="FacilityCare.Infrastructure/FacilityCare.Infrastructure.csproj" />
