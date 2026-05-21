@@ -742,6 +742,22 @@
           }
         }
       },
+      "Scalar.AspNetCore/2.14.14": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/Scalar.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Scalar.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Swashbuckle.AspNetCore/10.1.7": {
         "type": "package",
         "dependencies": {
@@ -983,7 +999,8 @@
           "FacilityCare.Application": "1.0.0",
           "FacilityCare.Domain": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "10.0.8",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.1"
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "10.0.1",
+          "System.IdentityModel.Tokens.Jwt": "8.18.0"
         },
         "compile": {
           "bin/placeholder/FacilityCare.Infrastructure.dll": {}
@@ -2844,6 +2861,25 @@
         "postgresql.png"
       ]
     },
+    "Scalar.AspNetCore/2.14.14": {
+      "sha512": "xNa3MadDudKk7y+0gQPBQihVL+JxGP3KNZHB4Zl2W42ATFIffHHHBjsuyKJ4YPUnnA7NUiHR/diqV/FTZC9dkg==",
+      "type": "package",
+      "path": "scalar.aspnetcore/2.14.14",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "icon.png",
+        "lib/net10.0/Scalar.AspNetCore.dll",
+        "lib/net10.0/Scalar.AspNetCore.xml",
+        "lib/net8.0/Scalar.AspNetCore.dll",
+        "lib/net8.0/Scalar.AspNetCore.xml",
+        "lib/net9.0/Scalar.AspNetCore.dll",
+        "lib/net9.0/Scalar.AspNetCore.xml",
+        "scalar.aspnetcore.2.14.14.nupkg.sha512",
+        "scalar.aspnetcore.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore/10.1.7": {
       "sha512": "vgef8DPT411JU5JjHiDbr0WOxsIVuAvegPGtqmm4Na4JRl/264dfBJcGkiPHsAr5P+Vda+qN1rZKRtBl1rF9aA==",
       "type": "package",
@@ -3156,6 +3192,7 @@
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 10.0.8",
       "Microsoft.AspNetCore.OpenApi >= 10.0.7",
       "Microsoft.EntityFrameworkCore.Design >= 10.0.8",
+      "Scalar.AspNetCore >= 2.14.14",
       "Swashbuckle.AspNetCore >= 10.1.7",
       "System.IdentityModel.Tokens.Jwt >= 8.18.0"
     ]
@@ -3230,6 +3267,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[10.0.8, )"
+          },
+          "Scalar.AspNetCore": {
+            "target": "Package",
+            "version": "[2.14.14, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

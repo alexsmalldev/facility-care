@@ -2,6 +2,7 @@
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
   </Folder>
+  <Project Path="FacilityCare.Application.Tests/FacilityCare.Application.Tests.csproj" Id="b845af50-c41e-4da6-b61d-941257365bd5" />
   <Project Path="FacilityCare.Application/FacilityCare.Application.csproj" />
   <Project Path="FacilityCare.Domain/FacilityCare.Domain.csproj" />
   <Project Path="FacilityCare.Infrastructure/FacilityCare.Infrastructure.csproj" />

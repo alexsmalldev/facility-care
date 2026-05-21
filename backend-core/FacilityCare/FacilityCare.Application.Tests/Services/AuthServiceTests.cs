@@ -1,0 +1,117 @@
+﻿using FacilityCare.Application.DTOs.Auth;
+using FacilityCare.Infrastructure.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Moq;
+
+namespace FacilityCare.Application.Tests.Services;
+
+public class AuthServiceTests
+{
+    private readonly Mock<UserManager<IdentityUser>> _userManagerMock;
+    private readonly Mock<IConfiguration> _configurationMock;
+    private readonly AuthService _authService;
+
+    public AuthServiceTests()
+    {
+        _userManagerMock = new Mock<UserManager<IdentityUser>>(
+            Mock.Of<IUserStore<IdentityUser>>(), null, null, null, null, null, null, null, null);
+
+        _configurationMock = new Mock<IConfiguration>();
+        _configurationMock.Setup(c => c["Jwt:Key"]).Returns("this-is-a-test-secret-key-32chars!!");
+        _configurationMock.Setup(c => c["Jwt:Issuer"]).Returns("FacilityCare");
+        _configurationMock.Setup(c => c["Jwt:Audience"]).Returns("FacilityCare");
+
+        _authService = new AuthService(_userManagerMock.Object, _configurationMock.Object);
+    }
+
+    [Fact]
+    public async Task RegisterAsync_WhenUsernameAlreadyExists_ThrowsException()
+    {
+        _userManagerMock.Setup(u => u.FindByNameAsync("admin"))
+            .ReturnsAsync(new IdentityUser { UserName = "admin" });
+
+        await Assert.ThrowsAsync<Exception>(() =>
+            _authService.RegisterAsync(new RegisterRequest
+            {
+                Username = "admin",
+                Email = "admin@test.com",
+                Password = "Admin123!"
+            }));
+    }
+
+    [Fact]
+    public async Task RegisterAsync_WhenValidRequest_ReturnsAuthResponse()
+    {
+        _userManagerMock.Setup(u => u.FindByNameAsync("newuser"))
+            .ReturnsAsync((IdentityUser?)null);
+
+        _userManagerMock.Setup(u => u.CreateAsync(It.IsAny<IdentityUser>(), It.IsAny<string>()))
+            .ReturnsAsync(IdentityResult.Success);
+
+        _userManagerMock.Setup(u => u.SetAuthenticationTokenAsync(
+            It.IsAny<IdentityUser>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            .ReturnsAsync(IdentityResult.Success);
+
+        var (response, refreshToken) = await _authService.RegisterAsync(new RegisterRequest
+        {
+            Username = "newuser",
+            Email = "newuser@test.com",
+            Password = "Test123!"
+        });
+
+        Assert.NotNull(response.Access);
+        Assert.NotNull(refreshToken);
+        Assert.Equal("User Created Successfully.", response.Message);
+    }
+
+    [Fact]
+    public async Task LoginAsync_WhenInvalidCredentials_ThrowsException()
+    {
+        _userManagerMock.Setup(u => u.FindByNameAsync("wronguser"))
+            .ReturnsAsync((IdentityUser?)null);
+
+        await Assert.ThrowsAsync<Exception>(() =>
+            _authService.LoginAsync(new LoginRequest
+            {
+                Username = "wronguser",
+                Password = "wrongpassword"
+            }));
+    }
+
+    [Fact]
+    public async Task LoginAsync_WhenValidCredentials_ReturnsAuthResponse()
+    {
+        var user = new IdentityUser { UserName = "admin", Email = "admin@test.com" };
+
+        _userManagerMock.Setup(u => u.FindByNameAsync("admin"))
+            .ReturnsAsync(user);
+
+        _userManagerMock.Setup(u => u.CheckPasswordAsync(user, "Admin123!"))
+            .ReturnsAsync(true);
+
+        _userManagerMock.Setup(u => u.SetAuthenticationTokenAsync(
+            It.IsAny<IdentityUser>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            .ReturnsAsync(IdentityResult.Success);
+
+        var (response, refreshToken) = await _authService.LoginAsync(new LoginRequest
+        {
+            Username = "admin",
+            Password = "Admin123!"
+        });
+
+        Assert.NotNull(response.Access);
+        Assert.NotNull(refreshToken);
+        Assert.Equal("Login successful", response.Message);
+    }
+
+    [Fact]
+    public async Task UpdatePasswordAsync_WhenUserNotFound_ThrowsException()
+    {
+        _userManagerMock.Setup(u => u.FindByIdAsync("invalid-id"))
+            .ReturnsAsync((IdentityUser?)null);
+
+        await Assert.ThrowsAsync<Exception>(() =>
+            _authService.UpdatePasswordAsync("invalid-id", "oldpass", "newpass"));
+    }
+}
