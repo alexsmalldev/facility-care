@@ -18,7 +18,7 @@ const RequestsByBuildingChart = ({ requestsByBuilding, chartConfig }) => {
                     <BarChart accessibilityLayer data={requestsByBuilding} layout="vertical" margin={{ right: 16 }}>
                         <CartesianGrid horizontal={false} />
                         <YAxis
-                            dataKey="building__name"
+                            dataKey="buildingName"
                             type="category"
                             tickLine={false}
                             tickMargin={10}
@@ -29,7 +29,7 @@ const RequestsByBuildingChart = ({ requestsByBuilding, chartConfig }) => {
                         <XAxis dataKey="count" type="number" hide />
                         <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
                         <Bar dataKey="count" layout="vertical" fill="var(--color-desktop)" radius={8} barSize={60}>
-                            <LabelList dataKey="building__name" position="insideLeft" offset={8} className="fill-[--color-label]" fontSize={12} />
+                            <LabelList dataKey="buildingName" position="insideLeft" offset={8} className="fill-[--color-label]" fontSize={12} />
                             <LabelList dataKey="count" position="right" offset={8} className="fill-foreground" fontSize={12} />
                         </Bar>
                     </BarChart>

@@ -65,7 +65,7 @@ const ServiceTypes = () => {
                                     >
                                         <div className="flex flex-1 min-w-0 gap-x-4">
                                             <img
-                                                src={serviceType.service_icon}
+                                                src={serviceType.serviceIcon}
                                                 alt={serviceType.name}
                                                 className="h-12 w-12"
                                             />
@@ -79,7 +79,7 @@ const ServiceTypes = () => {
                                             </div>
                                         </div>
                                         <div className="flex shrink-0 items-center gap-x-4">
-                                            {serviceType.is_active ? (
+                                            {serviceType.isActive ? (
                                                 <span className="inline-flex items-center rounded-md bg-green-50 mx-2 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
                                                     Active
                                                 </span>

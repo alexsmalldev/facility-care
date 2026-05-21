@@ -58,11 +58,11 @@ const BuildingUsers = ({ selectedBuildingData }) => {
                                                     <div
                                                         className="flex items-center justify-center h-12 w-12 rounded-full text-white font-lg font-semibold bg-gray-600"
                                                     >
-                                                        {user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase()}
+                                                        {user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()}
                                                     </div>
                                                     <div className="min-w-0 flex-auto">
                                                         <p className="text-sm font-semibold leading-6 text-gray-900">
-                                                            {`${user.first_name} ${user.last_name}`}
+                                                            {`${user.firstName} ${user.lastName}`}
                                                         </p>
                                                         <p className="mt-1 flex text-sm leading-5 text-gray-500">
                                                             {user.email}
@@ -137,11 +137,11 @@ const BuildingUsers = ({ selectedBuildingData }) => {
                                 <div
                                     className="flex items-center justify-center h-12 w-12 rounded-full text-white font-lg font-semibold bg-gray-600"
                                 >
-                                    {user.first_name[0].toUpperCase() + user.last_name[0].toUpperCase()}
+                                    {user.firstName[0].toUpperCase() + user.lastName[0].toUpperCase()}
                                 </div>
                                 <div className="min-w-0 flex-auto">
                                     <p className="text-sm font-medium leading-6 text-gray-900">
-                                        {`${user.first_name} ${user.last_name}`}
+                                        {`${user.firstName} ${user.lastName}`}
                                     </p>
                                     <p className="mt-1 flex text-sm leading-5 text-gray-500">
                                         {user.email}

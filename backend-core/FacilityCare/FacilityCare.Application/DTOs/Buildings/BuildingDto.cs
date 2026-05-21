@@ -1,4 +1,6 @@
-﻿namespace FacilityCare.Application.DTOs.Buildings;
+﻿using FacilityCare.Application.DTOs.Users;
+
+namespace FacilityCare.Application.DTOs.Buildings;
 
 public class BuildingDto
 {
@@ -11,4 +13,5 @@ public class BuildingDto
     public string Country { get; set; } = string.Empty;
     public decimal Latitude { get; set; }
     public decimal Longitude { get; set; }
+    public IList<UserDto> Users { get; set; } = new List<UserDto>();
 }

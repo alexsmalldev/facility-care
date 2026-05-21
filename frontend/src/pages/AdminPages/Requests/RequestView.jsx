@@ -16,16 +16,16 @@ import { useUser } from '../../../contexts/UserContext';
 import { useLoading } from '../../../contexts/LoadingContext';
 
 
-const completeOption = { title: 'Complete', value: 'complete', description: 'The Request has been fulfilled.', current: false };
-const cancelOption = { title: 'Cancel', value: 'cancel', description: 'This Request is no longed doable or needed.', current: false };
-const inProgressOption = { title: 'In-Progress', value: 'in_progress', description: 'The Request is currently being worked on.', current: false };
+const completeOption = { title: 'Complete', value: 'Completed', description: 'The Request has been fulfilled.', current: false };
+const cancelOption = { title: 'Cancel', value: 'Cancelled', description: 'This Request is no longer doable or needed.', current: false };
+const inProgressOption = { title: 'In-Progress', value: 'InProgress', description: 'The Request is currently being worked on.', current: false };
 const openOptions = [
-    { title: 'Open', value: 'open', description: 'The Request is open and ready to be assigned.', current: true },
+    { title: 'Open', value: 'Open', description: 'The Request is open and ready to be assigned.', current: true },
     inProgressOption,
     cancelOption
 ];
 const inProgressOptions = [
-    { title: 'In-Progress', value: 'in_progress', description: 'The Request is currently being worked on.', current: true, },
+    { title: 'In-Progress', value: 'InProgress', description: 'The Request is currently being worked on.', current: true },
     completeOption,
     cancelOption
 ];
@@ -53,17 +53,17 @@ const RequestView = () => {
     const fetchRequestDetails = async () => {
         showLoading('Fetching Request Details...');
         try {
-            const response = await api.get(`/service-requests/?id=${id}`);
-            setRequestDetails(response.data[0]);
-            switch (response.data[0].status) {
-                case "open":
+            const response = await api.get(`/ServiceRequests/${id}`);
+            setRequestDetails(response.data);
+            switch (response.data.status) {
+                case "Open":
                     setOptionsToMap(openOptions);
                     setSelectedStatus(openOptions[0]);
-                    break
-                case "in_progress":
+                    break;
+                case "InProgress":
                     setOptionsToMap(inProgressOptions);
                     setSelectedStatus(inProgressOptions[0]);
-                    break
+                    break;
                 default:
                     setOptionsToMap(null);
             }
@@ -72,19 +72,19 @@ const RequestView = () => {
         } finally {
             hideLoading();
         }
-    }
+    };
 
     const fetchRequestUpdates = async () => {
         showLoading('Fetching Request Updates...');
         try {
-            const response = await api.get(`updates/service_request_updates/?service_request_id=${id}`);
+            const response = await api.get(`/Updates/service-request?serviceRequestId=${id}`);
             setRequestUpdates(response.data);
         } catch (e) {
             navigate('*');
         } finally {
             hideLoading();
         }
-    }
+    };
 
     const fetchRequest = () => {
         fetchRequestDetails();
@@ -101,7 +101,7 @@ const RequestView = () => {
         }
         setToStatus(selectedOption.title);
         setOpenStatusChangeDialog(true);
-    }
+    };
 
     const handleCloseStatusChangeDialog = () => {
         setOpenStatusChangeDialog(false)
@@ -134,23 +134,23 @@ const RequestView = () => {
                 <div className="flex items-center justify-between">
                     <div className="flex-auto flex flex-row gap-4">
                         <h1 className="text-2xl font-semibold leading-6 text-gray-900">{`Request ${id}`}</h1>
-                        {requestDetails && requestDetails.status == 'completed'
+                        {requestDetails && requestDetails.status == 'Completed'
                             ?
                             <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
                                 Complete
                             </span>
-                            : requestDetails && requestDetails.status == 'cancelled' ?
+                            : requestDetails && requestDetails.status == 'Cancelled' ?
                                 <span className="inline-flex items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">
                                     Cancelled
                                 </span>
-                                : new Date() > new Date(requestDetails?.service_level_agreement_date) ?
+                                : new Date() > new Date(requestDetails?.serviceLevelAgreementDate) ?
                                     <span className="inline-flex items-center rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">
                                         OVERDUE
                                     </span>
-                                    : hasRole('regular') && requestDetails && requestDetails.status == 'in_progress' ?
+                                    : hasRole('regular') && requestDetails && requestDetails.status == 'InProgress' ?
                                         <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
                                             In Progress
-                                        </span> : hasRole('regular') && requestDetails && requestDetails.status == 'open' ?
+                                        </span> : hasRole('regular') && requestDetails && requestDetails.status == 'Open' ?
                                             <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
                                                 Open
                                             </span> : null

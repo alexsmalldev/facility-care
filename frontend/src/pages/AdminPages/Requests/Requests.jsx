@@ -25,41 +25,20 @@ const AllRequests = () => {
 
     const { buildings } = useBuildings();
 
-    const { serviceTypes } = useServiceTypes(); 
+    const { serviceTypes } = useServiceTypes();
 
     const statusOptions = [
-        {
-            name: 'Open',
-            id: 'open'
-        },
-        {
-            name: 'In-Progress',
-            id: 'in_progress'
-        },
-        {
-            name: 'Completed',
-            id: 'completed'
-        },
-        {
-            name: 'Cancelled',
-            id: 'cancelled'
-        },
+        { name: 'Open', id: 'Open' },
+        { name: 'In-Progress', id: 'InProgress' },
+        { name: 'Completed', id: 'Completed' },
+        { name: 'Cancelled', id: 'Cancelled' },
     ];
 
     const priorityOptions = [
-        {
-            name: 'Low',
-            id: 'low'
-        },
-        {
-            name: 'Medium',
-            id: 'medium'
-        },
-        {
-            name: 'High',
-            id: 'high'
-        }
-    ]
+        { name: 'Low', id: 'Low' },
+        { name: 'Medium', id: 'Medium' },
+        { name: 'High', id: 'High' }
+    ];
 
 
     return (
@@ -69,16 +48,16 @@ const AllRequests = () => {
                 <div className="mt-4 flex flex-row w-full gap-4 flex-wrap">
                     <FilterButton
                         options={buildings}
-                        selectedValue={filters.building}
-                        onSelect={(value) => updateFilter('building', value)}
+                        selectedValue={filters.buildingId}
+                        onSelect={(value) => updateFilter('buildingId', value)}
                         placeholder="Any Building"
                         showSearch={true}
                         emptyText="No buildings found"
                     />
                     <FilterButton
                         options={serviceTypes}
-                        selectedValue={filters.service_request_item}
-                        onSelect={(value) => updateFilter('service_request_item', value)}
+                        selectedValue={filters.serviceTypeId}
+                        onSelect={(value) => updateFilter('serviceTypeId', value)}
                         placeholder="Any Service"
                         showSearch={true}
                         emptyText="No services found"
@@ -105,10 +84,10 @@ const AllRequests = () => {
                     <DataTable
                         columns={[
                             { header: 'ID', accessor: 'id', mobileHidden: false, width: '5%' },
-                            { header: 'Service', accessor: 'service_request_item_detail.name', mobileHidden: false, width: '20%' },
-                            { header: 'Location', accessor: 'building_detail.name', mediumVisible: true, width: '20%' },
-                            { header: 'Created Date', accessor: 'created_date', mediumVisible: true, width: '20%' },
-                            { header: 'SLA Date', accessor: 'service_level_agreement_date', mediumVisible: true, width: '20%' },
+                            { header: 'Service', accessor: 'serviceType.name', mobileHidden: false, width: '20%' },
+                            { header: 'Location', accessor: 'building.name', mediumVisible: true, width: '20%' },
+                            { header: 'Created Date', accessor: 'createdDate', mediumVisible: true, width: '20%' },
+                            { header: 'SLA Date', accessor: 'serviceLevelAgreementDate', mediumVisible: true, width: '20%' },
                             { header: 'Priority', accessor: 'priority', width: '10%' },
                             { header: 'Status', accessor: 'status', width: '10%' }
                         ]}

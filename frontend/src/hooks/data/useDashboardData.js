@@ -23,8 +23,8 @@ export const useDashboardData = () => {
         try {
             setChartData([]);
             showLoading("Fetching Requests Over Time...");
-            const response = await api.get(`dashboard/requests_over_time/?timeframe=${timeframe}`);
-            setChartData(response.data.requests_over_time);
+            const response = await api.get(`/dashboard/requests-over-time?timeframe=${timeframe}`);
+            setChartData(response.data.requestsOverTime);
         } catch (e) {
             triggerNotification("ERROR", "Failed to fetch requests over time data", "Please try again.");
         } finally {
@@ -35,7 +35,7 @@ export const useDashboardData = () => {
     const fetchGeneralStats = async () => {
         try {
             showLoading('Fetching General Stats...');
-            const response = await api.get('dashboard/general_stats/');
+            const response = await api.get('/dashboard/general-stats');
             setGeneralStats(response.data.stats);
         } catch (e) {
             triggerNotification('ERROR', 'Failed to fetch General Stats', 'Please try again');
@@ -47,8 +47,8 @@ export const useDashboardData = () => {
     const fetchTodaysUpdates = async () => {
         try {
             showLoading('Fetching Todays Updates...');
-            const response = await api.get('dashboard/todays_updates/');
-            setTodaysUpdates(response.data.updates_today);
+            const response = await api.get('/dashboard/todays-updates');
+            setTodaysUpdates(response.data.updatesToday);
         } catch (e) {
             triggerNotification('ERROR', 'Failed to fetch Todays Updates', 'Please try again');
         } finally {
@@ -59,8 +59,8 @@ export const useDashboardData = () => {
     const fetchActionRequired = async () => {
         try {
             showLoading('Fetching Actions Required...');
-            const response = await api.get('dashboard/action_required/');
-            setActionsRequired(response.data.actions_required);
+            const response = await api.get('/dashboard/action-required');
+            setActionsRequired(response.data.actionsRequired);
         } catch (e) {
             triggerNotification('ERROR', 'Failed to fetch Actions Required', 'Please try again');
         } finally {
@@ -71,8 +71,8 @@ export const useDashboardData = () => {
     const fetchRequestsByBuilding = async () => {
         try {
             showLoading('Fetching Requests by Building...');
-            const response = await api.get('dashboard/requests_by_building/');
-            setRequestsByBuilding(response.data.requests_by_building);
+            const response = await api.get('/dashboard/requests-by-building');
+            setRequestsByBuilding(response.data.requestsByBuilding);
         } catch (e) {
             triggerNotification('ERROR', 'Failed to fetch Requests by Building', 'Please try again');
         } finally {
@@ -83,8 +83,8 @@ export const useDashboardData = () => {
     const fetchRequestsByServiceType = async () => {
         try {
             showLoading('Fetching Requests by Service Type...');
-            const response = await api.get('dashboard/requests_by_service_type/');
-            setRequestsByServiceType(response.data.requests_by_service_type);
+            const response = await api.get('/dashboard/requests-by-service-type');
+            setRequestsByServiceType(response.data.requestsByServiceType);
         } catch (e) {
             triggerNotification('ERROR', 'Failed to fetch Requests by Service Type', 'Please try again');
         } finally {

@@ -34,8 +34,8 @@ const Buildings = () => {
                 onClose={() => setOpenBuildingDrawer(false)}
                 selectedBuildingData={{
                     name: '',
-                    address_line1: '',
-                    address_line2: '',
+                    addressLine1: '',
+                    addressLine2: '',
                     city: '',
                     postcode: '',
                     country: 'United Kingdom',
@@ -50,7 +50,7 @@ const Buildings = () => {
                     <DataTable
                         columns={[
                             { header: 'Name', accessor: 'name', width: '25%' },
-                            { header: 'Address Line 1', accessor: 'address_line1', mobileHidden: true, width: '40%' },
+                            { header: 'Address Line 1', accessor: 'addressLine1', mobileHidden: true, width: '40%' },
                             { header: 'City', accessor: 'city', width: '25%' },
                             { header: 'Postcode', accessor: 'postcode', mediumVisible: true, width: '10%' },
                         ]}

@@ -19,13 +19,13 @@ public class ServiceRequestsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] int? buildingId, [FromQuery] int? serviceTypeId, [FromQuery] string? priority, [FromQuery] string? status, [FromQuery] string? ordering)
     {
         try
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             var isAdmin = User.IsInRole("Admin");
-            var requests = await _serviceRequestService.GetAllAsync(userId, isAdmin);
+            var requests = await _serviceRequestService.GetAllAsync(userId, isAdmin, buildingId, serviceTypeId, priority, status, ordering);
             return Ok(requests);
         }
         catch (Exception ex)

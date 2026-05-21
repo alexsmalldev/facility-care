@@ -39,9 +39,9 @@ const ManageUsers = () => {
                             columns={[
                                 { header: 'Username', accessor: 'username', width: '20%' },
                                 { header: 'Email Address', accessor: 'email', mobileHidden: false, width: '20%' },
-                                { header: 'First Name', accessor: 'first_name', mediumVisible: true, width: '10%' },
-                                { header: 'Last Name', accessor: 'last_name', mediumVisible: true, width: '10%' },
-                                { header: 'Type', accessor: 'user_type', mediumVisible: true, width: '10%' },
+                                { header: 'First Name', accessor: 'firstName', mediumVisible: true, width: '10%' },
+                                { header: 'Last Name', accessor: 'lastName', mediumVisible: true, width: '10%' },
+                                { header: 'Type', accessor: 'roles', mediumVisible: true, width: '10%' },
                             ]}
                             data={userArray}
                             showCheckboxes={true}

@@ -5,7 +5,7 @@ namespace FacilityCare.Application.Common.Interfaces;
 
 public interface IBuildingService
 {
-    Task<IList<BuildingDto>> GetAllAsync(string userId, bool isAdmin);
+    Task<IList<BuildingDto>> GetAllAsync(string userId, bool isAdmin, string? query = null, string? ordering = null);
     Task<BuildingDto> GetByIdAsync(int id, string userId, bool isAdmin);
     Task<BuildingDto> CreateAsync(CreateBuildingRequest request);
     Task<BuildingDto> UpdateAsync(int id, UpdateBuildingRequest request);

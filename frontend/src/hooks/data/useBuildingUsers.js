@@ -33,7 +33,7 @@ export const useBuildingUsers = (buildingId) => {
         showLoading('Assigning Users...');
         try {
             const userIds = [...assignedUsers.map((u) => u.id), ...selectedUsersToAssign];
-            await api.put(`/buildings/${buildingId}/update_users/`, { user_ids: userIds });
+            await api.put(`/buildings/${buildingId}/users`, { userIds: userIds });
             triggerNotification('SUCCESS', 'Users Assigned Successfully', 'Users have been assigned.');
             fetchUsers();
         } catch (error) {
@@ -50,7 +50,7 @@ export const useBuildingUsers = (buildingId) => {
         try {
             const remainingUsers = assignedUsers.filter((user) => user.id !== userId);
             const userIds = remainingUsers.map((user) => user.id);
-            await api.put(`/buildings/${buildingId}/update_users/`, { user_ids: userIds });
+            await api.put(`/buildings/${buildingId}/users`, { userIds: userIds });
             triggerNotification('SUCCESS', 'User Removed', 'User has been removed from the building.');
             fetchUsers();
         } catch (error) {
@@ -72,7 +72,7 @@ export const useBuildingUsers = (buildingId) => {
         fetchAssignableUsers: async () => {
             showLoading('Fetching assignable users...');
             try {
-                const response = await api.get(`/buildings/${buildingId}/available_users/`);
+                const response = await api.get(`/buildings/${buildingId}/available-users/`);
                 setAssignableUsers(response.data);
             } catch (error) {
                 triggerNotification('FAIL', 'Error fetching assignable users', `${error.message}`);

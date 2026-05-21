@@ -15,16 +15,16 @@ const errorBorder = "block w-full rounded-md border-0 py-1.5 pr-10 text-red-900 
 const ServiceTypeSchema = Yup.object().shape({
     name: Yup.string().max(100, 'Maximum 100 characters').required('Name is required'),
     description: Yup.string().max(255, 'Maximum 255 characters').required('Description is required'),
-    service_icon: Yup.mixed().required('Service Icon is required'),
-    is_active: Yup.boolean().required('Status is required'),
+    serviceIcon: Yup.mixed().required('Service Icon is required'),
+    isActive: Yup.boolean().required('Status is required'),
 });
 
 const ServiceTypeDialog = ({ open, onClose, selectedServiceType, handleSave  }) => {
-    const [preview, setPreview] = useState(selectedServiceType?.service_icon || null);
+    const [preview, setPreview] = useState(selectedServiceType?.serviceIcon || null);
 
     useEffect(() => {
         if (open) {
-            setPreview(selectedServiceType?.service_icon || null);
+            setPreview(selectedServiceType?.serviceIcon || null);
         }
     }, [open, selectedServiceType]);
 
@@ -32,8 +32,8 @@ const ServiceTypeDialog = ({ open, onClose, selectedServiceType, handleSave  }) 
         id: selectedServiceType?.id || '',
         name: selectedServiceType?.name || '',
         description: selectedServiceType?.description || '',
-        service_icon: selectedServiceType?.service_icon || null,
-        is_active: selectedServiceType?.is_active || false,
+        serviceIcon: selectedServiceType?.serviceIcon || null,
+        isActive: selectedServiceType?.isActive || false,
     };
 
     const handleClose = () => {
@@ -66,6 +66,7 @@ const ServiceTypeDialog = ({ open, onClose, selectedServiceType, handleSave  }) 
                                     enableReinitialize
                                     validationSchema={ServiceTypeSchema}
                                     onSubmit={(values, { setSubmitting, resetForm }) => {
+                                        debugger;
                                         handleSave(values, selectedServiceType?.id !== undefined);
                                         handleClose();
                                         resetForm();
@@ -123,7 +124,7 @@ const ServiceTypeDialog = ({ open, onClose, selectedServiceType, handleSave  }) 
                                                     </span>
                                                 </div>
                                                 <div className={cn(
-                                                    errors.service_icon && touched.service_icon ? errorBorder : 'border border-dashed border-gray-900/25',
+                                                    errors.serviceIcon && touched.serviceIcon ? errorBorder : 'border border-dashed border-gray-900/25',
                                                     'mt-2 flex justify-center rounded-lg px-6 py-10 bg-white'
                                                 )}>
                                                     <div className="text-center">
@@ -138,20 +139,20 @@ const ServiceTypeDialog = ({ open, onClose, selectedServiceType, handleSave  }) 
                                                         )}
                                                         <div className="mt-4 flex text-sm leading-6 text-gray-600 items-center">
                                                             <label
-                                                                htmlFor="service_icon"
+                                                                htmlFor="serviceIcon"
                                                                 className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                                                             >
                                                                 <span>Upload a file</span>
                                                             </label>
                                                             <input
-                                                                id="service_icon"
-                                                                name="service_icon"
+                                                                id="serviceIcon"
+                                                                name="serviceIcon"
                                                                 type="file"
                                                                 accept="image/*"
                                                                 className="sr-only"
                                                                 onChange={(event) => {
                                                                     const file = event.currentTarget.files[0];
-                                                                    setFieldValue("service_icon", file);
+                                                                    setFieldValue("serviceIcon", file);
                                                                     const reader = new FileReader();
                                                                     reader.onloadend = () => {
                                                                         setPreview(reader.result);
@@ -164,26 +165,26 @@ const ServiceTypeDialog = ({ open, onClose, selectedServiceType, handleSave  }) 
                                                         <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 5MB</p>
                                                     </div>
                                                 </div>
-                                                {errors.service_icon && touched.service_icon && (
-                                                    <div className="mt-2 text-sm text-red-600">{errors.service_icon}</div>
+                                                {errors.serviceIcon && touched.serviceIcon && (
+                                                    <div className="mt-2 text-sm text-red-600">{errors.serviceIcon}</div>
                                                 )}
                                             </div>
 
                                             <div className="flex items-center">
-                                                <label htmlFor="is_active" className="flex-1 text-sm font-medium leading-6 text-gray-900">
+                                                <label htmlFor="isActive" className="flex-1 text-sm font-medium leading-6 text-gray-900">
                                                     Enable in Application
                                                 </label>
                                                 <div className="mt-2">
                                                     <Switch
-                                                        checked={values.is_active}
-                                                        onChange={(value) => setFieldValue('is_active', value)}
-                                                        className={`${values.is_active ? 'bg-indigo-600' : 'bg-gray-200'}
+                                                        checked={values.isActive}
+                                                        onChange={(value) => setFieldValue('isActive', value)}
+                                                        className={`${values.isActive ? 'bg-indigo-600' : 'bg-gray-200'}
                         relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2`}
                                                     >
                                                         <span className="sr-only">Toggle Active Status</span>
                                                         <span
                                                             aria-hidden="true"
-                                                            className={`${values.is_active ? 'translate-x-5' : 'translate-x-0'}
+                                                            className={`${values.isActive ? 'translate-x-5' : 'translate-x-0'}
                             inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform`}
                                                         />
                                                     </Switch>

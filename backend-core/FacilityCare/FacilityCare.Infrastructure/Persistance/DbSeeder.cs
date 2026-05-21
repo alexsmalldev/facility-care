@@ -1,4 +1,5 @@
 ﻿using FacilityCare.Domain.Entities;
+using FacilityCare.Domain.Enums;
 using FacilityCare.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -76,6 +77,177 @@ public static class DbSeeder
         if (regular != null && headquarters != null && !context.BuildingUsers.Any())
         {
             context.BuildingUsers.Add(new BuildingUser { BuildingId = headquarters.Id, UserId = regular.Id });
+            await context.SaveChangesAsync();
+        }
+
+        var admin = await userManager.FindByNameAsync("admin");
+        var regularSeed = await userManager.FindByNameAsync("regular");
+
+        if (!context.ServiceRequests.Any() && admin != null && regularSeed != null)
+        {
+            var cleaning = context.ServiceTypes.First(st => st.Name == "Cleaning");
+            var maintenance = context.ServiceTypes.First(st => st.Name == "Maintenance");
+            var security = context.ServiceTypes.First(st => st.Name == "Security");
+            var hq = context.Buildings.First(b => b.Name == "Headquarters");
+            var northOffice = context.Buildings.First(b => b.Name == "North Office");
+
+            var requests = new List<ServiceRequest>
+            {
+                new ServiceRequest
+                {
+                    CustomerNotes = "Common areas need a deep clean",
+                    Status = ServiceRequestStatus.Open,
+                    Priority = ServiceRequestPriority.Low,
+                    CreatedById = regularSeed.Id,
+                    ServiceTypeId = cleaning.Id,
+                    BuildingId = hq.Id,
+                    ServiceLevelAgreementDate = DateTime.UtcNow.AddDays(5)
+                },
+                new ServiceRequest
+                {
+                    CustomerNotes = "Boiler making strange noise",
+                    Status = ServiceRequestStatus.InProgress,
+                    Priority = ServiceRequestPriority.High,
+                    CreatedById = regularSeed.Id,
+                    ServiceTypeId = maintenance.Id,
+                    BuildingId = hq.Id,
+                    ServiceLevelAgreementDate = DateTime.UtcNow.AddDays(1)
+                },
+                new ServiceRequest
+                {
+                    CustomerNotes = "Access card not working",
+                    Status = ServiceRequestStatus.Completed,
+                    Priority = ServiceRequestPriority.Medium,
+                    CreatedById = regularSeed.Id,
+                    ServiceTypeId = security.Id,
+                    BuildingId = northOffice.Id,
+                    ServiceLevelAgreementDate = DateTime.UtcNow.AddDays(3)
+                },
+                new ServiceRequest
+                {
+                    CustomerNotes = "Office windows need cleaning",
+                    Status = ServiceRequestStatus.Open,
+                    Priority = ServiceRequestPriority.Low,
+                    CreatedById = regularSeed.Id,
+                    ServiceTypeId = cleaning.Id,
+                    BuildingId = northOffice.Id,
+                    ServiceLevelAgreementDate = DateTime.UtcNow.AddDays(5)
+                },
+                new ServiceRequest
+                {
+                    CustomerNotes = "Ceiling light flickering in meeting room",
+                    Status = ServiceRequestStatus.InProgress,
+                    Priority = ServiceRequestPriority.Medium,
+                    CreatedById = regularSeed.Id,
+                    ServiceTypeId = maintenance.Id,
+                    BuildingId = hq.Id,
+                    ServiceLevelAgreementDate = DateTime.UtcNow.AddDays(3)
+                }
+            };
+
+            context.ServiceRequests.AddRange(requests);
+            await context.SaveChangesAsync();
+
+            var updates = new List<Update>
+            {
+                new Update
+                {
+                    Title = "Request Created",
+                    Message = "Request has been created",
+                    CreatedById = regularSeed.Id,
+                    ServiceRequestId = requests[0].Id,
+                    Type = UpdateType.Event,
+                    IsRead = true
+                },
+                new Update
+                {
+                    Title = "Request Created",
+                    Message = "Request has been created",
+                    CreatedById = regularSeed.Id,
+                    ServiceRequestId = requests[1].Id,
+                    Type = UpdateType.Event,
+                    IsRead = true
+                },
+                new Update
+                {
+                    Title = $"Request {requests[1].Id} Status Update",
+                    Message = $"Request {requests[1].Id} has been moved to InProgress",
+                    CreatedById = admin.Id,
+                    AssociatedToId = regularSeed.Id,
+                    ServiceRequestId = requests[1].Id,
+                    Type = UpdateType.Event,
+                    IsRead = false
+                },
+                new Update
+                {
+                    Title = $"A Comment has been added to Request {requests[1].Id}",
+                    Message = "Engineer has been dispatched to inspect the boiler",
+                    CreatedById = admin.Id,
+                    AssociatedToId = regularSeed.Id,
+                    ServiceRequestId = requests[1].Id,
+                    Type = UpdateType.Message,
+                    IsRead = false
+                },
+                new Update
+                {
+                    Title = "Request Created",
+                    Message = "Request has been created",
+                    CreatedById = regularSeed.Id,
+                    ServiceRequestId = requests[2].Id,
+                    Type = UpdateType.Event,
+                    IsRead = true
+                },
+                new Update
+                {
+                    Title = $"Request {requests[2].Id} Status Update",
+                    Message = $"Request {requests[2].Id} has been moved to Completed",
+                    CreatedById = admin.Id,
+                    AssociatedToId = regularSeed.Id,
+                    ServiceRequestId = requests[2].Id,
+                    Type = UpdateType.Event,
+                    IsRead = true
+                },
+                new Update
+                {
+                    Title = $"A Comment has been added to Request {requests[2].Id}",
+                    Message = "Access card has been reprogrammed and tested successfully",
+                    CreatedById = admin.Id,
+                    AssociatedToId = regularSeed.Id,
+                    ServiceRequestId = requests[2].Id,
+                    Type = UpdateType.Message,
+                    IsRead = true
+                },
+                new Update
+                {
+                    Title = "Request Created",
+                    Message = "Request has been created",
+                    CreatedById = regularSeed.Id,
+                    ServiceRequestId = requests[3].Id,
+                    Type = UpdateType.Event,
+                    IsRead = true
+                },
+                new Update
+                {
+                    Title = "Request Created",
+                    Message = "Request has been created",
+                    CreatedById = regularSeed.Id,
+                    ServiceRequestId = requests[4].Id,
+                    Type = UpdateType.Event,
+                    IsRead = true
+                },
+                new Update
+                {
+                    Title = $"A Comment has been added to Request {requests[4].Id}",
+                    Message = "Electrician scheduled for tomorrow morning",
+                    CreatedById = admin.Id,
+                    AssociatedToId = regularSeed.Id,
+                    ServiceRequestId = requests[4].Id,
+                    Type = UpdateType.Message,
+                    IsRead = false
+                }
+            };
+
+            context.Updates.AddRange(updates);
             await context.SaveChangesAsync();
         }
     }

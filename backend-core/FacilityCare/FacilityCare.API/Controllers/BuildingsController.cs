@@ -19,13 +19,13 @@ public class BuildingsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] string? query, [FromQuery] string? ordering)
     {
         try
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             var isAdmin = User.IsInRole("Admin");
-            var buildings = await _buildingService.GetAllAsync(userId, isAdmin);
+            var buildings = await _buildingService.GetAllAsync(userId, isAdmin, query, ordering);
             return Ok(buildings);
         }
         catch (Exception ex)

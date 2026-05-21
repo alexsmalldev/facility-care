@@ -28,17 +28,17 @@ const RequestStatusChangeDialog = ({ open, onClose, toStatus, requestDetails, on
         let status = '';
         switch (toStatus) {
             case 'Cancel':
-                status = 'cancelled';
+                status = 'Cancelled';
                 break;
             case 'In-Progress':
-                status = 'in_progress'
+                status = 'InProgress';
                 break;
             default:
-                status = 'completed'
+                status = 'Completed';
         }
 
         try {
-            await api.patch(`/service-requests/${requestDetails.id}/update_status/`, {
+            await api.patch(`/ServiceRequests/${requestDetails.id}/update-status`, {
                 status: status,
                 comment: values.message || ""
             });

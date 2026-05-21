@@ -1,6 +1,5 @@
 ﻿using FacilityCare.Application.DTOs.Buildings;
 using FacilityCare.Application.DTOs.ServiceTypes;
-using FacilityCare.Domain.Enums;
 
 namespace FacilityCare.Application.DTOs.ServiceRequests;
 
@@ -14,6 +13,8 @@ public class ServiceRequestDto
     public DateTime UpdatedDate { get; set; }
     public DateTime? ServiceLevelAgreementDate { get; set; }
     public string CreatedById { get; set; } = string.Empty;
+    public string CreatedByFirstName { get; set; } = string.Empty;
+    public string CreatedByLastName { get; set; } = string.Empty;
     public ServiceTypeDto ServiceType { get; set; } = null!;
     public BuildingDto Building { get; set; } = null!;
 }

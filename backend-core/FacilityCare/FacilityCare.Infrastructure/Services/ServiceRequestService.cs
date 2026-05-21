@@ -5,6 +5,7 @@ using FacilityCare.Application.DTOs.ServiceTypes;
 using FacilityCare.Domain.Entities;
 using FacilityCare.Domain.Enums;
 using FacilityCare.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FacilityCare.Infrastructure.Services;
@@ -12,27 +13,56 @@ namespace FacilityCare.Infrastructure.Services;
 public class ServiceRequestService : IServiceRequestService
 {
     private readonly AppDbContext _context;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public ServiceRequestService(AppDbContext context)
+    public ServiceRequestService(AppDbContext context, UserManager<ApplicationUser> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
 
-    public async Task<IList<ServiceRequestDto>> GetAllAsync(string userId, bool isAdmin)
+    public async Task<IList<ServiceRequestDto>> GetAllAsync(string userId, bool isAdmin, int? buildingId = null, int? serviceTypeId = null, string? priority = null, string? status = null, string? ordering = null)
     {
         var query = _context.ServiceRequests
             .Include(sr => sr.ServiceType)
             .Include(sr => sr.Building)
             .AsQueryable();
 
-        if (isAdmin)
-            query = query.OrderBy(sr => sr.ServiceLevelAgreementDate);
-        else
-            query = query.Where(sr => sr.CreatedById == userId)
-                         .OrderByDescending(sr => sr.CreatedDate);
+        if (!isAdmin)
+            query = query.Where(sr => sr.CreatedById == userId);
+
+        if (buildingId.HasValue)
+            query = query.Where(sr => sr.BuildingId == buildingId.Value);
+
+        if (serviceTypeId.HasValue)
+            query = query.Where(sr => sr.ServiceTypeId == serviceTypeId.Value);
+
+        if (!string.IsNullOrEmpty(priority) && Enum.TryParse<ServiceRequestPriority>(priority, true, out var priorityEnum))
+            query = query.Where(sr => sr.Priority == priorityEnum);
+
+        if (!string.IsNullOrEmpty(status) && Enum.TryParse<ServiceRequestStatus>(status, true, out var statusEnum))
+            query = query.Where(sr => sr.Status == statusEnum);
+
+        query = ordering switch
+        {
+            "id" => query.OrderBy(sr => sr.Id),
+            "-id" => query.OrderByDescending(sr => sr.Id),
+            "createdDate" => query.OrderBy(sr => sr.CreatedDate),
+            "-createdDate" => query.OrderByDescending(sr => sr.CreatedDate),
+            "serviceLevelAgreementDate" => query.OrderBy(sr => sr.ServiceLevelAgreementDate),
+            "-serviceLevelAgreementDate" => query.OrderByDescending(sr => sr.ServiceLevelAgreementDate),
+            "priority" => query.OrderBy(sr => sr.Priority),
+            "-priority" => query.OrderByDescending(sr => sr.Priority),
+            "status" => query.OrderBy(sr => sr.Status),
+            "-status" => query.OrderByDescending(sr => sr.Status),
+            _ => isAdmin ? query.OrderBy(sr => sr.ServiceLevelAgreementDate) : query.OrderByDescending(sr => sr.CreatedDate)
+        };
 
         var requests = await query.ToListAsync();
-        return requests.Select(MapToDto).ToList();
+        var result = new List<ServiceRequestDto>();
+        foreach (var sr in requests)
+            result.Add(await MapToDto(sr));
+        return result;
     }
 
     public async Task<ServiceRequestDto> GetByIdAsync(int id, string userId, bool isAdmin)
@@ -48,7 +78,7 @@ public class ServiceRequestService : IServiceRequestService
         if (!isAdmin && request.CreatedById != userId)
             throw new UnauthorizedAccessException("You do not have permission to access this service request");
 
-        return MapToDto(request);
+        return await MapToDto(request);
     }
 
     public async Task<ServiceRequestDto> CreateAsync(CreateServiceRequestRequest request, string userId)
@@ -99,7 +129,7 @@ public class ServiceRequestService : IServiceRequestService
         serviceRequest.ServiceType = serviceType;
         serviceRequest.Building = building;
 
-        return MapToDto(serviceRequest);
+        return await MapToDto(serviceRequest);
     }
 
     public async Task DeleteAsync(int id, string userId, bool isAdmin)
@@ -131,7 +161,6 @@ public class ServiceRequestService : IServiceRequestService
         if (!Enum.TryParse<ServiceRequestStatus>(request.Status, out var newStatus))
             throw new Exception("Invalid status value");
 
-        var previousStatus = serviceRequest.Status;
         serviceRequest.Status = newStatus;
         serviceRequest.UpdatedDate = DateTime.UtcNow;
 
@@ -159,7 +188,7 @@ public class ServiceRequestService : IServiceRequestService
         }
 
         await _context.SaveChangesAsync();
-        return MapToDto(serviceRequest);
+        return await MapToDto(serviceRequest);
     }
 
     public async Task<UserHomeDataResponse> GetUserHomeDataAsync(string userId)
@@ -182,9 +211,13 @@ public class ServiceRequestService : IServiceRequestService
             .Where(st => recentServiceTypeIds.Contains(st.Id))
             .ToListAsync();
 
+        var result = new List<ServiceRequestDto>();
+        foreach (var sr in userRequests)
+            result.Add(await MapToDto(sr));
+
         return new UserHomeDataResponse
         {
-            RecentRequests = userRequests.Select(MapToDto).ToList(),
+            RecentRequests = result,
             RecentServiceTypes = recentServiceTypes.Select(st => new ServiceTypeDto
             {
                 Id = st.Id,
@@ -196,35 +229,41 @@ public class ServiceRequestService : IServiceRequestService
         };
     }
 
-    private static ServiceRequestDto MapToDto(ServiceRequest sr) => new()
+    private async Task<ServiceRequestDto> MapToDto(ServiceRequest sr)
     {
-        Id = sr.Id,
-        CustomerNotes = sr.CustomerNotes,
-        Status = sr.Status.ToString(),
-        Priority = sr.Priority.ToString(),
-        CreatedDate = sr.CreatedDate,
-        UpdatedDate = sr.UpdatedDate,
-        ServiceLevelAgreementDate = sr.ServiceLevelAgreementDate,
-        CreatedById = sr.CreatedById,
-        ServiceType = new ServiceTypeDto
+        var createdBy = await _userManager.FindByIdAsync(sr.CreatedById);
+        return new ServiceRequestDto
         {
-            Id = sr.ServiceType.Id,
-            Name = sr.ServiceType.Name,
-            Description = sr.ServiceType.Description,
-            ServiceIcon = sr.ServiceType.ServiceIcon,
-            IsActive = sr.ServiceType.IsActive
-        },
-        Building = new BuildingDto
-        {
-            Id = sr.Building.Id,
-            Name = sr.Building.Name,
-            AddressLine1 = sr.Building.AddressLine1,
-            AddressLine2 = sr.Building.AddressLine2,
-            City = sr.Building.City,
-            Postcode = sr.Building.Postcode,
-            Country = sr.Building.Country,
-            Latitude = sr.Building.Latitude,
-            Longitude = sr.Building.Longitude
-        }
-    };
+            Id = sr.Id,
+            CustomerNotes = sr.CustomerNotes,
+            Status = sr.Status.ToString(),
+            Priority = sr.Priority.ToString(),
+            CreatedDate = sr.CreatedDate,
+            UpdatedDate = sr.UpdatedDate,
+            ServiceLevelAgreementDate = sr.ServiceLevelAgreementDate,
+            CreatedById = sr.CreatedById,
+            CreatedByFirstName = createdBy?.FirstName ?? string.Empty,
+            CreatedByLastName = createdBy?.LastName ?? string.Empty,
+            ServiceType = new ServiceTypeDto
+            {
+                Id = sr.ServiceType.Id,
+                Name = sr.ServiceType.Name,
+                Description = sr.ServiceType.Description,
+                ServiceIcon = sr.ServiceType.ServiceIcon,
+                IsActive = sr.ServiceType.IsActive
+            },
+            Building = new BuildingDto
+            {
+                Id = sr.Building.Id,
+                Name = sr.Building.Name,
+                AddressLine1 = sr.Building.AddressLine1,
+                AddressLine2 = sr.Building.AddressLine2,
+                City = sr.Building.City,
+                Postcode = sr.Building.Postcode,
+                Country = sr.Building.Country,
+                Latitude = sr.Building.Latitude,
+                Longitude = sr.Building.Longitude
+            }
+        };
+    }
 }

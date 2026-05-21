@@ -36,9 +36,9 @@ const Dashboard = () => {
     }
 
     const stats = [
-        { name: 'Open Requests', value: generalStats.open_requests.value },
-        { name: 'In-Progress Requests', value: generalStats.in_progress_requests.value },
-        { name: 'Complete Requests', value: generalStats.completed_requests.value },
+        { name: 'Open Requests', value: generalStats.openRequests },
+        { name: 'In-Progress Requests', value: generalStats.inProgressRequests },
+        { name: 'Complete Requests', value: generalStats.completedRequests },
     ];
 
     const chartConfig = {
@@ -98,7 +98,7 @@ const Dashboard = () => {
                                     <ul className="w-full overflow-y-auto max-h-[250px] divide-y divide-gray-100">
                                         {todaysUpdates.map((update, index) => (
                                             <li
-                                                onClick={() => { navigate(`requests/${update.service_request}`) }}
+                                                onClick={() => { navigate(`requests/${update.serviceRequestId}`) }}
                                                 key={index}
                                                 className="flex items-center flex-row h-16 justify-between hover:bg-gray-50 sm:px-6 hover:cursor-pointer px-4"
                                             >
@@ -107,7 +107,7 @@ const Dashboard = () => {
                                                         {update.title}
                                                     </p>
                                                     <p className="text-sm font-medium text-zinc-500 leading-none">
-                                                        {moment(update.created_date).format('MMMM Do YYYY, h:mm:ss A')}
+                                                        {moment(update.createdDate).format('MMMM Do YYYY, h:mm:ss A')}
                                                     </p>
                                                 </div>
                                                 <ChevronRightIcon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />
@@ -147,10 +147,10 @@ const Dashboard = () => {
                                             >
                                                 <div className="flex-1 ">
                                                     <p className="text-sm font-medium leading-none mb-2">
-                                                        {"Request: " + request.id + " - " + request.building_detail.name}
+                                                        {"Request: " + request.id + " - " + request.building.name}
                                                     </p>
                                                     <p className="text-sm font-medium text-zinc-500 leading-none">
-                                                        {moment(request.service_level_agreement_date).format('MMMM Do YYYY, h:mm:ss A')}
+                                                        {moment(request.serviceLevelAgreementDate).format('MMMM Do YYYY, h:mm:ss A')}
                                                     </p>
                                                 </div>
                                                 <ChevronRightIcon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />

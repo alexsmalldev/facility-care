@@ -3,6 +3,7 @@ using FacilityCare.Application.DTOs.Updates;
 using FacilityCare.Domain.Entities;
 using FacilityCare.Domain.Enums;
 using FacilityCare.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace FacilityCare.Infrastructure.Services;
@@ -10,10 +11,12 @@ namespace FacilityCare.Infrastructure.Services;
 public class UpdateService : IUpdateService
 {
     private readonly AppDbContext _context;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public UpdateService(AppDbContext context)
+    public UpdateService(AppDbContext context, UserManager<ApplicationUser> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
 
     public async Task<IList<UpdateDto>> GetAllAsync(string userId, bool isAdmin)
@@ -24,17 +27,17 @@ public class UpdateService : IUpdateService
             query = query.Where(u => u.AssociatedToId == userId);
 
         var updates = await query.OrderByDescending(u => u.CreatedDate).ToListAsync();
-        return updates.Select(MapToDto).ToList();
+        return await MapToDtoList(updates);
     }
 
     public async Task<IList<UpdateDto>> GetByServiceRequestAsync(int serviceRequestId)
     {
         var updates = await _context.Updates
             .Where(u => u.ServiceRequestId == serviceRequestId)
-            .OrderByDescending(u => u.CreatedDate)
+            .OrderBy(u => u.CreatedDate)
             .ToListAsync();
 
-        return updates.Select(MapToDto).ToList();
+        return await MapToDtoList(updates);
     }
 
     public async Task<UpdateDto> CreateAsync(CreateUpdateRequest request, string userId, bool isAdmin)
@@ -62,7 +65,7 @@ public class UpdateService : IUpdateService
         _context.Updates.Add(update);
         await _context.SaveChangesAsync();
 
-        return MapToDto(update);
+        return await MapToDto(update);
     }
 
     public async Task<IList<UpdateDto>> GetNotificationsAsync(string userId)
@@ -73,7 +76,7 @@ public class UpdateService : IUpdateService
             .ThenByDescending(u => u.CreatedDate)
             .ToListAsync();
 
-        return updates.Select(MapToDto).ToList();
+        return await MapToDtoList(updates);
     }
 
     public async Task MarkAllReadAsync(string userId)
@@ -101,16 +104,30 @@ public class UpdateService : IUpdateService
         await _context.SaveChangesAsync();
     }
 
-    private static UpdateDto MapToDto(Update update) => new()
+    private async Task<IList<UpdateDto>> MapToDtoList(IList<Update> updates)
     {
-        Id = update.Id,
-        Title = update.Title,
-        Message = update.Message,
-        CreatedDate = update.CreatedDate,
-        CreatedById = update.CreatedById,
-        AssociatedToId = update.AssociatedToId,
-        ServiceRequestId = update.ServiceRequestId,
-        Type = update.Type.ToString(),
-        IsRead = update.IsRead
-    };
+        var result = new List<UpdateDto>();
+        foreach (var update in updates)
+            result.Add(await MapToDto(update));
+        return result;
+    }
+
+    private async Task<UpdateDto> MapToDto(Update update)
+    {
+        var createdBy = await _userManager.FindByIdAsync(update.CreatedById);
+        return new UpdateDto
+        {
+            Id = update.Id,
+            Title = update.Title,
+            Message = update.Message,
+            CreatedDate = update.CreatedDate,
+            CreatedById = update.CreatedById,
+            CreatedByFirstName = createdBy?.FirstName ?? string.Empty,
+            CreatedByLastName = createdBy?.LastName ?? string.Empty,
+            AssociatedToId = update.AssociatedToId,
+            ServiceRequestId = update.ServiceRequestId,
+            Type = update.Type.ToString(),
+            IsRead = update.IsRead
+        };
+    }
 }

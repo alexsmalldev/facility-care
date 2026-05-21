@@ -18,7 +18,7 @@ const RequestsByServiceTypeChart = ({ requestsByServiceType, chartConfig }) => {
                 <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-[250px]">
                     <RadarChart data={requestsByServiceType}>
                         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-                        <PolarAngleAxis dataKey="service_request_item__name" />
+                        <PolarAngleAxis dataKey="serviceTypeName" />
                         <PolarGrid />
                         <Radar
                             dataKey="count"

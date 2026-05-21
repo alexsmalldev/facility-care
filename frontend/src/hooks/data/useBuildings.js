@@ -21,9 +21,9 @@ export const useBuildings = () => {
     const fetchBuildings = async (searchQuery, orderingString) => {
         showLoading('Fetching Buildings...');
         try {
-            let endpoint = '/buildings/';
+            let endpoint = '/buildings';
             if (searchQuery) {
-                endpoint = `/buildings/?search=${encodeURIComponent(searchQuery)}`;
+                endpoint = `/buildings?query=${encodeURIComponent(searchQuery)}`;
             }
             if (orderingString) {
                 endpoint += `${searchQuery ? '&' : '?'}ordering=${orderingString}`;
@@ -57,7 +57,7 @@ export const useBuildings = () => {
     const createBuilding = async (values) => {
         showLoading('Creating Building');
         try {
-            await api.post('/buildings/', values);
+            await api.post('/buildings', values);
             triggerNotification('SUCCESS', 'Operation Successful!', `"${values.name}" has been created.`);
             setOpenBuildingDrawer(false);
             fetchBuildings(query);

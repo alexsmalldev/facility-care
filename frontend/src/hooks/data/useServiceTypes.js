@@ -36,7 +36,7 @@ export const useServiceTypes = () => {
         debugger;
         showLoading('Fetching Service Types...');
         try {
-            const endpoint = searchQuery ? `/service-types/?search=${searchQuery}` : '/service-types/';
+            const endpoint = searchQuery ? `/ServiceTypes/?search=${searchQuery}` : '/ServiceTypes/';
             const response = await api.get(endpoint);
             setServiceTypes(response.data.results || response.data);
         } catch (error) {
@@ -51,18 +51,18 @@ export const useServiceTypes = () => {
         const formData = new FormData();
         formData.append('name', serviceTypeData.name);
         formData.append('description', serviceTypeData.description);
-        formData.append('is_active', serviceTypeData.is_active);
+        formData.append('isActive', serviceTypeData.isActive);
 
-        if (serviceTypeData.service_icon instanceof File) {
-            formData.append('service_icon', serviceTypeData.service_icon);
+        if (serviceTypeData.serviceIcon instanceof File) {
+            formData.append('serviceIcon', serviceTypeData.serviceIcon);
         }
 
         try {
             if (isUpdate) {
-                await api.put(`/service-types/${serviceTypeData.id}/`, formData);
+                await api.put(`/ServiceTypes/${serviceTypeData.id}/`, formData);
                 triggerNotification('SUCCESS', 'Operation Success', `${serviceTypeData.name} has been updated`);
             } else {
-                await api.post('/service-types/', formData);
+                await api.post('/ServiceTypes/', formData);
                 triggerNotification('SUCCESS', 'Operation Success', `${serviceTypeData.name} has been created`);
             }
 
@@ -77,7 +77,7 @@ export const useServiceTypes = () => {
     const fetchServiceTypeById = async (id) => {
         showLoading('Fetching Service Type Data...');
         try {
-            const response = await api.get(`/service-types/${id}/`);
+            const response = await api.get(`/ServiceTypes/${id}/`);
             setSelectedServiceType(response.data);
             setDialogOpen(true);
         } catch (error) {

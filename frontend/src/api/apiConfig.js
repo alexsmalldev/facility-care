@@ -1,71 +1,46 @@
-// External libraries
 import axios from 'axios';
+import { getAccessToken, setToken, removeToken } from './tokenVerification';
 
-// Internal
-import { getAccessToken, getRefreshToken, setToken, removeToken } from './tokenVerification';
-
-// base api used by all hooks
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+    baseURL: import.meta.env.VITE_API_URL,
+    withCredentials: true
 });
 
-// intercept the request and append token within header
 api.interceptors.request.use(config => {
-  const accessToken = getAccessToken();
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
-  }
-  return config;
+    const token = getAccessToken();
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
 }, error => Promise.reject(error));
 
-// refresh the token if expired
-const refreshAccessToken = async () => {
-  const refreshToken = getRefreshToken();
-  if (!refreshToken) {
-    throw new Error('No refresh token available');
-  }
-
-  try {
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/refresh_token/`, { refresh: refreshToken });
-    const { access, refresh } = response.data;
-
-    if (access) {
-      setToken(access, refresh); 
-      return access; 
-    } else {
-      throw new Error('Failed to refresh token');
-    }
-  } catch (error) {
-    removeToken(); 
-    throw error;
-  }
-};
-
-// intercept the subsequent request if 401 returned aka. refresh the access token because it's expired
-// if following request fails then request token has expired so go back to login
 api.interceptors.response.use(
-  response => response,
-  async error => {
-    const originalRequest = error.config;
+    response => response,
+    async error => {
+        const originalRequest = error.config;
 
-    if (error.response && error.response.status === 401 && !originalRequest._retry && originalRequest.url !== '/auth/login/') {
-      originalRequest._retry = true;
+        if (error.response?.status === 401 && !originalRequest._retry && originalRequest.url !== '/auth/login') {
+            originalRequest._retry = true;
 
-      try {
-        const newAccessToken = await refreshAccessToken();
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return api(originalRequest); 
-      } catch (refreshError) {
-        removeToken();
-        const event = new CustomEvent('tokenExpired');
-        window.dispatchEvent(event);
+            try {
+                const response = await axios.post(
+                    `${import.meta.env.VITE_API_URL}/auth/refresh-token`,
+                    {},
+                    { withCredentials: true }
+                );
 
-        return Promise.reject(refreshError); 
-      }
+                setToken(response.data.access);
+                originalRequest.headers.Authorization = `Bearer ${response.data.access}`;
+                return api(originalRequest);
+            } catch {
+                removeToken();
+                window.dispatchEvent(new CustomEvent('tokenExpired'));
+                return Promise.reject(error);
+            }
+        }
+
+        return Promise.reject(error);
     }
-
-    return Promise.reject(error);
-  }
 );
 
 export default api;

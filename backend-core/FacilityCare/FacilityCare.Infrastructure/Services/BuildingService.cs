@@ -5,6 +5,7 @@ using FacilityCare.Domain.Entities;
 using FacilityCare.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace FacilityCare.Infrastructure.Services;
 
@@ -19,15 +20,31 @@ public class BuildingService : IBuildingService
         _userManager = userManager;
     }
 
-    public async Task<IList<BuildingDto>> GetAllAsync(string userId, bool isAdmin)
+    public async Task<IList<BuildingDto>> GetAllAsync(string userId, bool isAdmin, string? query = null, string? ordering = null)
     {
-        var query = _context.Buildings.AsQueryable();
+        var buildings = _context.Buildings.AsQueryable();
 
         if (!isAdmin)
-            query = query.Where(b => b.BuildingUsers.Any(bu => bu.UserId == userId));
+            buildings = buildings.Where(b => b.BuildingUsers.Any(bu => bu.UserId == userId));
 
-        var buildings = await query.ToListAsync();
-        return buildings.Select(MapToDto).ToList();
+        if (!string.IsNullOrEmpty(query))
+            buildings = buildings.Where(b => b.Name!.ToLower().Contains(query.ToLower()));
+
+        buildings = ordering switch
+        {
+            "name" => buildings.OrderBy(b => b.Name),
+            "-name" => buildings.OrderByDescending(b => b.Name),
+            "city" => buildings.OrderBy(b => b.City),
+            "-city" => buildings.OrderByDescending(b => b.City),
+            "postcode" => buildings.OrderBy(b => b.Postcode),
+            "-postcode" => buildings.OrderByDescending(b => b.Postcode),
+            "addressLine1" => buildings.OrderBy(b => b.AddressLine1),
+            "-addressLine1" => buildings.OrderByDescending(b => b.AddressLine1),
+            _ => buildings.OrderBy(b => b.Name)
+        };
+
+        var result = await buildings.ToListAsync();
+        return result.Select(MapToDto).ToList();
     }
 
     public async Task<BuildingDto> GetByIdAsync(int id, string userId, bool isAdmin)
@@ -42,7 +59,25 @@ public class BuildingService : IBuildingService
         if (!isAdmin && !building.BuildingUsers.Any(bu => bu.UserId == userId))
             throw new Exception("Access denied");
 
-        return MapToDto(building);
+        var dto = MapToDto(building);
+
+        foreach (var bu in building.BuildingUsers)
+        {
+            var user = await _userManager.FindByIdAsync(bu.UserId);
+            if (user == null) continue;
+            var roles = await _userManager.GetRolesAsync(user);
+            dto.Users.Add(new UserDto
+            {
+                Id = user.Id,
+                Username = user.UserName!,
+                Email = user.Email!,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Roles = roles
+            });
+        }
+
+        return dto;
     }
 
     public async Task<BuildingDto> CreateAsync(CreateBuildingRequest request)

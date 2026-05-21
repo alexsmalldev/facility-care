@@ -1,83 +1,77 @@
-// External libraries
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-// Internal
-import { getAccessToken, getRefreshToken, removeToken } from '../api/tokenVerification';
-import api from '../api/apiConfig';
+import axios from 'axios';
+import { setToken, removeToken, getAccessToken } from '../api/tokenVerification';
 import { useWebSocket } from '../hooks/data/useWebSocket';
 import { useLoading } from '../contexts/LoadingContext';
-
+import { decodeToken } from '../lib/utils';
 
 const UserContext = createContext();
 
-// user context used to determine role based access and if user is authenticated on refresh of page
 export const UserProvider = ({ children }) => {
-  const { showLoading, hideLoading } = useLoading();
-  const { startWebSocket } = useWebSocket();
-  const [user, setUser] = useState(null);
-  const [selectedBuilding, setSelectedBuilding] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+    const { showLoading, hideLoading } = useLoading();
+    const [user, setUser] = useState(null);
+    const [selectedBuilding, setSelectedBuilding] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
-  const hasRole = (role) => user?.user_type === role;
+    const hasRole = (role) => user?.user_type === role;
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      const accessToken = getAccessToken();
+    useEffect(() => {
+        const restoreSession = async () => {
+            try {
+                // attempt to get a new access token using the refresh cookie
+                const response = await axios.post(
+                    `${import.meta.env.VITE_API_URL}/auth/refresh-token`,
+                    {},
+                    { withCredentials: true }
+                );
 
-      if (!accessToken) {
-        setLoading(false); 
-        return;
-      }
+                const { access } = response.data;
+                setToken(access);
 
-      try {
-        const response = await api.get('/users/me/');
-        setUser(response.data);
-        if (response.data.user_type == 'regular') {
-          startWebSocket();
-        }
-      } catch (error) {
-        removeToken();
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
+                const decoded = decodeToken(access);
+                setUser(decoded);
+            } catch {
+                // no valid refresh cookie - user needs to login
+                removeToken();
+                setUser(null);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    fetchUserInfo();
-  }, []); 
+        restoreSession();
+    }, []);
 
-  useEffect(() => {
-    const handleTokenExpiration = async () => {
-      try {
-        showLoading('Logging out...');
-        const refreshToken = getRefreshToken();
-        if (refreshToken) {
-            await api.post('/auth/logout/', { refresh: refreshToken });
-        }
-        removeToken();
-        setUser(null);
-    } catch (error) {
-        throw error;
-    } finally {
-        hideLoading();
-        navigate('/login')
-    }
-    };
+    useEffect(() => {
+        const handleTokenExpiration = async () => {
+            try {
+                showLoading('Logging out...');
+                await axios.post(
+                    `${import.meta.env.VITE_API_URL}/auth/logout`,
+                    {},
+                    { withCredentials: true }
+                );
+            } catch {
+                // ignore errors on logout
+            } finally {
+                removeToken();
+                setUser(null);
+                hideLoading();
+                navigate('/login');
+            }
+        };
 
-    window.addEventListener('tokenExpired', handleTokenExpiration);
+        window.addEventListener('tokenExpired', handleTokenExpiration);
+        return () => window.removeEventListener('tokenExpired', handleTokenExpiration);
+    }, [navigate]);
 
-    return () => {
-      window.removeEventListener('tokenExpired', handleTokenExpiration);
-    };
-  }, [navigate]);
-
-  return (
-    <UserContext.Provider value={{ user, setUser, hasRole, loading, selectedBuilding, setSelectedBuilding }}>
-      {children}
-    </UserContext.Provider>
-  );
+    return (
+        <UserContext.Provider value={{ user, setUser, hasRole, loading, selectedBuilding, setSelectedBuilding }}>
+            {children}
+        </UserContext.Provider>
+    );
 };
 
 export const useUser = () => useContext(UserContext);

@@ -75,12 +75,12 @@ const BuildingView = () => {
                                         </div>
                                         <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-sm">
                                             <dt className="font-medium leading-6 text-gray-500">Address Line 1</dt>
-                                            <dd className="mt-1 leading-6 text-gray-900 sm:col-span-2 sm:mt-0 font-medium break-words whitespace-normal">{buildingData.address_line1}</dd>
+                                            <dd className="mt-1 leading-6 text-gray-900 sm:col-span-2 sm:mt-0 font-medium break-words whitespace-normal">{buildingData.addressLine1}</dd>
                                         </div>
                                         {buildingData.address_line2 != null ?
                                             <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-sm">
                                                 <dt className="font-medium leading-6 text-gray-500">Address Line 2</dt>
-                                                <dd className="mt-1 leading-6 text-gray-900 sm:col-span-2 sm:mt-0 font-medium break-words whitespace-normal">{buildingData.address_line2}</dd>
+                                                <dd className="mt-1 leading-6 text-gray-900 sm:col-span-2 sm:mt-0 font-medium break-words whitespace-normal">{buildingData.addressLine2}</dd>
                                             </div> : null
                                         }
                                         <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 text-sm">
