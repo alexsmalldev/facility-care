@@ -48,11 +48,11 @@ public class ServiceTypesController : ControllerBase
 
     [HttpPost]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Create([FromForm] CreateServiceTypeRequest request, IFormFile? icon)
+    public async Task<IActionResult> Create([FromForm] CreateServiceTypeRequest request, IFormFile? serviceIcon)
     {
         try
         {
-            var serviceType = await _serviceTypeService.CreateAsync(request, icon);
+            var serviceType = await _serviceTypeService.CreateAsync(request, serviceIcon);
             return CreatedAtAction(nameof(GetById), new { id = serviceType.Id }, serviceType);
         }
         catch (Exception ex)
@@ -63,11 +63,11 @@ public class ServiceTypesController : ControllerBase
 
     [HttpPut("{id}")]
     [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Update(int id, [FromForm] UpdateServiceTypeRequest request, IFormFile? icon)
+    public async Task<IActionResult> Update(int id, [FromForm] UpdateServiceTypeRequest request, IFormFile? serviceIcon)
     {
         try
         {
-            var serviceType = await _serviceTypeService.UpdateAsync(id, request, icon);
+            var serviceType = await _serviceTypeService.UpdateAsync(id, request, serviceIcon);
             return Ok(serviceType);
         }
         catch (Exception ex)

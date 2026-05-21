@@ -5,39 +5,24 @@ namespace FacilityCare.Infrastructure.Services;
 
 public class FileService : IFileService
 {
-    private readonly string _uploadPath;
+    private readonly IS3Service _s3Service;
 
-    public FileService()
+    public FileService(IS3Service s3Service)
     {
-        _uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
-        if (!Directory.Exists(_uploadPath))
-            Directory.CreateDirectory(_uploadPath);
+        _s3Service = s3Service;
     }
 
     public async Task<string> UploadFileAsync(IFormFile file, string folder)
     {
         ValidateFile(file);
 
-        var folderPath = Path.Combine(_uploadPath, folder);
-        if (!Directory.Exists(folderPath))
-            Directory.CreateDirectory(folderPath);
-
-        var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
-        var filePath = Path.Combine(folderPath, fileName);
-
-        using var stream = new FileStream(filePath, FileMode.Create);
-        await file.CopyToAsync(stream);
-
-        return $"/uploads/{folder}/{fileName}";
+        using var stream = file.OpenReadStream();
+        return await _s3Service.UploadFileAsync(stream, file.FileName, file.ContentType);
     }
 
-    public Task DeleteFileAsync(string filePath)
+    public async Task DeleteFileAsync(string fileUrl)
     {
-        var fullPath = Path.Combine(Directory.GetCurrentDirectory(), filePath.TrimStart('/'));
-        if (File.Exists(fullPath))
-            File.Delete(fullPath);
-
-        return Task.CompletedTask;
+        await _s3Service.DeleteFileAsync(fileUrl);
     }
 
     private static void ValidateFile(IFormFile file)
