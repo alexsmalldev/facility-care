@@ -1,26 +1,39 @@
-// External libraries
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { Switch } from '@headlessui/react'
-import { PhotoIcon } from '@heroicons/react/24/solid'
+import { Switch } from '@headlessui/react';
+import { PhotoIcon } from '@heroicons/react/24/solid';
+import { cn } from '../../../../lib/utils';
 
-// Internal
-import { cn } from '../../../../lib/utils'
 const defaultInputBorder = "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6";
 const errorBorder = "block w-full rounded-md border-0 py-1.5 pr-10 text-red-900 ring-1 ring-inset ring-red-300 placeholder:text-red-300 focus:ring-2 focus:ring-inset focus:ring-red-500 sm:text-sm sm:leading-6";
+const disabledInputBorder = "block w-full rounded-md border-0 py-1.5 text-gray-400 bg-gray-100 shadow-sm ring-1 ring-inset ring-gray-200 sm:text-sm sm:leading-6 cursor-not-allowed";
 
-
-const ServiceTypeSchema = Yup.object().shape({
+const ServiceTypeSchema = (isUpdate) => Yup.object().shape({
     name: Yup.string().max(100, 'Maximum 100 characters').required('Name is required'),
     description: Yup.string().max(255, 'Maximum 255 characters').required('Description is required'),
     serviceIcon: Yup.mixed().required('Service Icon is required'),
     isActive: Yup.boolean().required('Status is required'),
+    isPaid: Yup.boolean().required('Payment type is required'),
+    price: isUpdate
+        ? Yup.number().nullable()
+        : Yup.number().when('isPaid', {
+            is: true,
+            then: (schema) => schema
+                .required('Price is required')
+                .min(0.01, 'Price must be greater than 0')
+                .test('max-decimals', 'Price can have at most 2 decimal places', (value) => {
+                    if (!value) return true;
+                    return /^\d+(\.\d{1,2})?$/.test(value.toString());
+                }),
+            otherwise: (schema) => schema.nullable()
+        })
 });
 
-const ServiceTypeDialog = ({ open, onClose, selectedServiceType, handleSave  }) => {
+const ServiceTypeDialog = ({ open, onClose, selectedServiceType, handleSave }) => {
     const [preview, setPreview] = useState(selectedServiceType?.serviceIcon || null);
+    const isUpdate = !!selectedServiceType?.id;
 
     useEffect(() => {
         if (open) {
@@ -34,6 +47,8 @@ const ServiceTypeDialog = ({ open, onClose, selectedServiceType, handleSave  }) 
         description: selectedServiceType?.description || '',
         serviceIcon: selectedServiceType?.serviceIcon || null,
         isActive: selectedServiceType?.isActive || false,
+        isPaid: selectedServiceType?.isPaid || false,
+        price: selectedServiceType?.price || ''
     };
 
     const handleClose = () => {
@@ -49,7 +64,6 @@ const ServiceTypeDialog = ({ open, onClose, selectedServiceType, handleSave  }) 
                 transition
                 className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
             />
-
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                 <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                     <DialogPanel
@@ -57,71 +71,52 @@ const ServiceTypeDialog = ({ open, onClose, selectedServiceType, handleSave  }) 
                         className="relative transform overflow-hidden rounded-lg bg-zinc-100 px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:max-w-lg sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95 w-full max-w-full"
                     >
                         <div>
-                            <div className="mt-3 text-center sm:mt-5 ">
+                            <div className="mt-3 text-center sm:mt-5">
                                 <DialogTitle as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                                    {selectedServiceType?.id ? 'Update Service' : 'Create Service'}
+                                    {isUpdate ? 'Update Service' : 'Create Service'}
                                 </DialogTitle>
                                 <Formik
                                     initialValues={initialValues}
                                     enableReinitialize
-                                    validationSchema={ServiceTypeSchema}
+                                    validationSchema={ServiceTypeSchema(isUpdate)}
                                     onSubmit={(values, { setSubmitting, resetForm }) => {
-                                        debugger;
-                                        handleSave(values, selectedServiceType?.id !== undefined);
+                                        handleSave(values, isUpdate);
                                         handleClose();
                                         resetForm();
                                     }}
                                 >
                                     {({ errors, touched, isSubmitting, setFieldValue, values }) => (
                                         <Form className="grid grid-cols-1 gap-y-6 text-left">
+
+                                            {/* Name */}
                                             <div>
                                                 <div className="flex justify-between">
-                                                    <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                                                        Name
-                                                    </label>
-                                                    <span id="email-optional" className="text-sm leading-6 text-gray-500">
-                                                        Required
-                                                    </span>
+                                                    <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">Name</label>
+                                                    <span className="text-sm leading-6 text-gray-500">Required</span>
                                                 </div>
                                                 <div className="mt-2">
-                                                    <Field
-                                                        name="name"
-                                                        id="name"
-                                                        type="text"
-                                                        className={errors.name && touched.name ? errorBorder : defaultInputBorder}
-                                                    />
+                                                    <Field name="name" id="name" type="text" className={errors.name && touched.name ? errorBorder : defaultInputBorder} />
                                                     <ErrorMessage name="name" component="div" className="mt-2 text-sm text-red-600" />
                                                 </div>
                                             </div>
 
+                                            {/* Description */}
                                             <div>
                                                 <div className="flex justify-between">
-                                                    <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                                                        Description
-                                                    </label>
-                                                    <span id="email-optional" className="text-sm leading-6 text-gray-500">
-                                                        Required
-                                                    </span>
+                                                    <label htmlFor="description" className="block text-sm font-medium leading-6 text-gray-900">Description</label>
+                                                    <span className="text-sm leading-6 text-gray-500">Required</span>
                                                 </div>
                                                 <div className="mt-2">
-                                                    <Field
-                                                        name="description"
-                                                        id="description"
-                                                        as="textarea"
-                                                        className={errors.description && touched.description ? errorBorder : defaultInputBorder}
-                                                    />
+                                                    <Field name="description" id="description" as="textarea" className={errors.description && touched.description ? errorBorder : defaultInputBorder} />
                                                     <ErrorMessage name="description" component="div" className="mt-2 text-sm text-red-600" />
                                                 </div>
                                             </div>
 
+                                            {/* Service Icon */}
                                             <div className="col-span-full">
                                                 <div className="flex justify-between">
-                                                    <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-                                                        Service Icon
-                                                    </label>
-                                                    <span id="email-optional" className="text-sm leading-6 text-gray-500">
-                                                        Required
-                                                    </span>
+                                                    <label className="block text-sm font-medium leading-6 text-gray-900">Service Icon</label>
+                                                    <span className="text-sm leading-6 text-gray-500">Required</span>
                                                 </div>
                                                 <div className={cn(
                                                     errors.serviceIcon && touched.serviceIcon ? errorBorder : 'border border-dashed border-gray-900/25',
@@ -129,15 +124,11 @@ const ServiceTypeDialog = ({ open, onClose, selectedServiceType, handleSave  }) 
                                                 )}>
                                                     <div className="text-center">
                                                         {preview ? (
-                                                            <img
-                                                                src={preview}
-                                                                alt="Preview"
-                                                                className="mx-auto h-12 w-12 text-gray-300"
-                                                            />
+                                                            <img src={preview} alt="Preview" className="mx-auto h-12 w-12" />
                                                         ) : (
                                                             <PhotoIcon aria-hidden="true" className="mx-auto h-12 w-12 text-gray-300" />
                                                         )}
-                                                        <div className="mt-4 flex text-sm leading-6 text-gray-600 items-center">
+                                                        <div className="mt-4 flex text-sm leading-6 text-gray-600 items-center justify-center">
                                                             <label
                                                                 htmlFor="serviceIcon"
                                                                 className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
@@ -154,13 +145,10 @@ const ServiceTypeDialog = ({ open, onClose, selectedServiceType, handleSave  }) 
                                                                     const file = event.currentTarget.files[0];
                                                                     setFieldValue("serviceIcon", file);
                                                                     const reader = new FileReader();
-                                                                    reader.onloadend = () => {
-                                                                        setPreview(reader.result);
-                                                                    };
+                                                                    reader.onloadend = () => setPreview(reader.result);
                                                                     reader.readAsDataURL(file);
                                                                 }}
                                                             />
-
                                                         </div>
                                                         <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 5MB</p>
                                                     </div>
@@ -170,33 +158,81 @@ const ServiceTypeDialog = ({ open, onClose, selectedServiceType, handleSave  }) 
                                                 )}
                                             </div>
 
+                                            {/* Enable in Application */}
                                             <div className="flex items-center">
                                                 <label htmlFor="isActive" className="flex-1 text-sm font-medium leading-6 text-gray-900">
                                                     Enable in Application
                                                 </label>
-                                                <div className="mt-2">
-                                                    <Switch
-                                                        checked={values.isActive}
-                                                        onChange={(value) => setFieldValue('isActive', value)}
-                                                        className={`${values.isActive ? 'bg-indigo-600' : 'bg-gray-200'}
-                        relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2`}
-                                                    >
-                                                        <span className="sr-only">Toggle Active Status</span>
-                                                        <span
-                                                            aria-hidden="true"
-                                                            className={`${values.isActive ? 'translate-x-5' : 'translate-x-0'}
-                            inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform`}
-                                                        />
-                                                    </Switch>
-                                                </div>
+                                                <Switch
+                                                    checked={values.isActive}
+                                                    onChange={(value) => setFieldValue('isActive', value)}
+                                                    className={`${values.isActive ? 'bg-indigo-600' : 'bg-gray-200'} relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2`}
+                                                >
+                                                    <span className="sr-only">Toggle Active Status</span>
+                                                    <span aria-hidden="true" className={`${values.isActive ? 'translate-x-5' : 'translate-x-0'} inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform`} />
+                                                </Switch>
                                             </div>
+
+                                            {/* Paid Service toggle — disabled on update if already paid */}
+                                            <div className="flex items-center">
+                                                <div className="flex-1">
+                                                    <label className="block text-sm font-medium leading-6 text-gray-900">
+                                                        Paid Service
+                                                    </label>
+                                                    {isUpdate && selectedServiceType?.isPaid && (
+                                                        <p className="text-xs text-gray-400">Price cannot be changed once set</p>
+                                                    )}
+                                                </div>
+                                                <Switch
+                                                    checked={values.isPaid}
+                                                    onChange={(value) => {
+                                                        if (isUpdate) return;
+                                                        setFieldValue('isPaid', value);
+                                                        if (!value) setFieldValue('price', '');
+                                                    }}
+                                                    disabled={isUpdate}
+                                                    className={`${values.isPaid ? 'bg-indigo-600' : 'bg-gray-200'} ${isUpdate ? 'opacity-50 cursor-not-allowed' : ''} relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2`}
+                                                >
+                                                    <span className="sr-only">Toggle Paid Status</span>
+                                                    <span aria-hidden="true" className={`${values.isPaid ? 'translate-x-5' : 'translate-x-0'} inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform`} />
+                                                </Switch>
+                                            </div>
+
+                                            {/* Price — shown when isPaid, disabled on update */}
+                                            {values.isPaid && (
+                                                <div>
+                                                    <div className="flex justify-between">
+                                                        <label htmlFor="price" className="block text-sm font-medium leading-6 text-gray-900">
+                                                            Price (£)
+                                                        </label>
+                                                        {!isUpdate && <span className="text-sm leading-6 text-gray-500">Required</span>}
+                                                    </div>
+                                                    <div className="mt-2">
+                                                        <Field
+                                                            name="price"
+                                                            id="price"
+                                                            type="number"
+                                                            step="0.01"
+                                                            min="0.01"
+                                                            disabled={isUpdate}
+                                                            className={isUpdate ? disabledInputBorder : errors.price && touched.price ? errorBorder : defaultInputBorder}
+                                                        />
+                                                        {isUpdate && (
+                                                            <p className="mt-1 text-xs text-gray-400">Price is locked and cannot be modified.</p>
+                                                        )}
+                                                        <ErrorMessage name="price" component="div" className="mt-2 text-sm text-red-600" />
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Buttons */}
                                             <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                                                 <button
                                                     type="submit"
                                                     className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
                                                     disabled={isSubmitting}
                                                 >
-                                                    {selectedServiceType?.id ? 'Update' : 'Create'}
+                                                    {isUpdate ? 'Update' : 'Create'}
                                                 </button>
                                                 <button
                                                     type="button"

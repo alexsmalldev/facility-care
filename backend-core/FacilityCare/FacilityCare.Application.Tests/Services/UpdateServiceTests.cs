@@ -3,7 +3,9 @@ using FacilityCare.Domain.Entities;
 using FacilityCare.Domain.Enums;
 using FacilityCare.Infrastructure.Persistence;
 using FacilityCare.Infrastructure.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 
 namespace FacilityCare.Application.Tests.Services;
 
@@ -11,15 +13,22 @@ public class UpdateServiceTests
 {
     private readonly AppDbContext _context;
     private readonly UpdateService _updateService;
+    private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
 
     public UpdateServiceTests()
     {
+        _userManagerMock = new Mock<UserManager<ApplicationUser>>(
+            Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
+
+        _userManagerMock.Setup(u => u.FindByIdAsync(It.IsAny<string>()))
+            .ReturnsAsync(new ApplicationUser { FirstName = "Test", LastName = "User" });
+
         var options = new DbContextOptionsBuilder<AppDbContext>()
             .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
             .Options;
 
         _context = new AppDbContext(options);
-        _updateService = new UpdateService(_context);
+        _updateService = new UpdateService(_context, _userManagerMock.Object);
 
         SeedData();
     }

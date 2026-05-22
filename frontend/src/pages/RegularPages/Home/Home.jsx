@@ -65,7 +65,7 @@ const Home = () => {
                                                 </CardHeader>
                                                 <CardContent className="select-none">
                                                     <img
-                                                        src={service.service_icon}
+                                                        src={service.serviceIcon}
                                                         alt={service.name}
                                                         className="h-14 w-14"
                                                     />

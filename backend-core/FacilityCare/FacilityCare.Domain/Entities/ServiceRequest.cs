@@ -11,6 +11,8 @@ public class ServiceRequest
     public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedDate { get; set; } = DateTime.UtcNow;
     public DateTime? ServiceLevelAgreementDate { get; set; }
+    public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.Unpaid;
+    public string? PaymentIntentId { get; set; }
 
     public string CreatedById { get; set; } = string.Empty;
 

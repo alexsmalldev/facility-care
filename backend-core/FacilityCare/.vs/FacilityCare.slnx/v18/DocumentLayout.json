@@ -3,48 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{24D2C2AD-E390-41FA-4ED7-7D96659DBC2B}|FacilityCare.Application\\FacilityCare.Application.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.application\\dtos\\updates\\updatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{24D2C2AD-E390-41FA-4ED7-7D96659DBC2B}|FacilityCare.Application\\FacilityCare.Application.csproj|solutionrelative:facilitycare.application\\dtos\\updates\\updatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.infrastructure\\services\\updateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|solutionrelative:facilitycare.infrastructure\\services\\updateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.infrastructure\\services\\servicerequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|solutionrelative:facilitycare.infrastructure\\services\\servicerequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{24D2C2AD-E390-41FA-4ED7-7D96659DBC2B}|FacilityCare.Application\\FacilityCare.Application.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.application\\dtos\\servicerequests\\servicerequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{24D2C2AD-E390-41FA-4ED7-7D96659DBC2B}|FacilityCare.Application\\FacilityCare.Application.csproj|solutionrelative:facilitycare.application\\dtos\\servicerequests\\servicerequestdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{44A6E586-FD1A-70FF-A558-A653135E2BDE}|FacilityCare.API\\FacilityCare.API.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.api\\controllers\\buildingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{44A6E586-FD1A-70FF-A558-A653135E2BDE}|FacilityCare.API\\FacilityCare.API.csproj|solutionrelative:facilitycare.api\\controllers\\buildingscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.infrastructure\\services\\buildingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|solutionrelative:facilitycare.infrastructure\\services\\buildingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{24D2C2AD-E390-41FA-4ED7-7D96659DBC2B}|FacilityCare.Application\\FacilityCare.Application.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.application\\common\\interfaces\\ibuildingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{24D2C2AD-E390-41FA-4ED7-7D96659DBC2B}|FacilityCare.Application\\FacilityCare.Application.csproj|solutionrelative:facilitycare.application\\common\\interfaces\\ibuildingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{44A6E586-FD1A-70FF-A558-A653135E2BDE}|FacilityCare.API\\FacilityCare.API.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.api\\controllers\\servicerequestscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{44A6E586-FD1A-70FF-A558-A653135E2BDE}|FacilityCare.API\\FacilityCare.API.csproj|solutionrelative:facilitycare.api\\controllers\\servicerequestscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24D2C2AD-E390-41FA-4ED7-7D96659DBC2B}|FacilityCare.Application\\FacilityCare.Application.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.application\\common\\interfaces\\iservicerequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{24D2C2AD-E390-41FA-4ED7-7D96659DBC2B}|FacilityCare.Application\\FacilityCare.Application.csproj|solutionrelative:facilitycare.application\\common\\interfaces\\iservicerequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.infrastructure\\services\\paymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|solutionrelative:facilitycare.infrastructure\\services\\paymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.infrastructure\\persistance\\dbseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|solutionrelative:facilitycare.infrastructure\\persistance\\dbseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{24D2C2AD-E390-41FA-4ED7-7D96659DBC2B}|FacilityCare.Application\\FacilityCare.Application.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.application\\common\\interfaces\\ipaymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{24D2C2AD-E390-41FA-4ED7-7D96659DBC2B}|FacilityCare.Application\\FacilityCare.Application.csproj|solutionrelative:facilitycare.application\\common\\interfaces\\ipaymentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{24D2C2AD-E390-41FA-4ED7-7D96659DBC2B}|FacilityCare.Application\\FacilityCare.Application.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.application\\dtos\\buildings\\buildingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{24D2C2AD-E390-41FA-4ED7-7D96659DBC2B}|FacilityCare.Application\\FacilityCare.Application.csproj|solutionrelative:facilitycare.application\\dtos\\buildings\\buildingdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|c:\\users\\alexs\\desktop\\development\\web\\facility-care\\backend-core\\facilitycare\\facilitycare.infrastructure\\services\\servicetypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A41D1A88-BCD5-6690-906C-6AC41FB1098B}|FacilityCare.Infrastructure\\FacilityCare.Infrastructure.csproj|solutionrelative:facilitycare.infrastructure\\services\\servicetypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,149 +26,58 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UpdateService.cs",
-              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Services\\UpdateService.cs",
-              "RelativeDocumentMoniker": "FacilityCare.Infrastructure\\Services\\UpdateService.cs",
-              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Services\\UpdateService.cs",
-              "RelativeToolTip": "FacilityCare.Infrastructure\\Services\\UpdateService.cs",
-              "ViewState": "AgIAAG4AAAAAAAAAAAAAwIAAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T18:15:06.966Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "UpdateDto.cs",
-              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application\\DTOs\\Updates\\UpdateDto.cs",
-              "RelativeDocumentMoniker": "FacilityCare.Application\\DTOs\\Updates\\UpdateDto.cs",
-              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application\\DTOs\\Updates\\UpdateDto.cs",
-              "RelativeToolTip": "FacilityCare.Application\\DTOs\\Updates\\UpdateDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T18:14:53.054Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ServiceRequestDto.cs",
-              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application\\DTOs\\ServiceRequests\\ServiceRequestDto.cs",
-              "RelativeDocumentMoniker": "FacilityCare.Application\\DTOs\\ServiceRequests\\ServiceRequestDto.cs",
-              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application\\DTOs\\ServiceRequests\\ServiceRequestDto.cs",
-              "RelativeToolTip": "FacilityCare.Application\\DTOs\\ServiceRequests\\ServiceRequestDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T18:11:52.397Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
               "Title": "ServiceRequestsController.cs",
               "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.API\\Controllers\\ServiceRequestsController.cs",
               "RelativeDocumentMoniker": "FacilityCare.API\\Controllers\\ServiceRequestsController.cs",
               "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.API\\Controllers\\ServiceRequestsController.cs",
               "RelativeToolTip": "FacilityCare.API\\Controllers\\ServiceRequestsController.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAxwBQAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAuwIoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T17:54:51.1Z",
+              "WhenOpened": "2026-05-22T11:52:01.339Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PaymentService.cs",
+              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Services\\PaymentService.cs",
+              "RelativeDocumentMoniker": "FacilityCare.Infrastructure\\Services\\PaymentService.cs",
+              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Services\\PaymentService.cs",
+              "RelativeToolTip": "FacilityCare.Infrastructure\\Services\\PaymentService.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAYwFcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-22T11:51:45.56Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ServiceRequestService.cs",
-              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Services\\ServiceRequestService.cs",
-              "RelativeDocumentMoniker": "FacilityCare.Infrastructure\\Services\\ServiceRequestService.cs",
-              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Services\\ServiceRequestService.cs",
-              "RelativeToolTip": "FacilityCare.Infrastructure\\Services\\ServiceRequestService.cs",
-              "ViewState": "AgIAANoAAAAAAAAAAAAYwOoAAAAkAAAAAAAAAA==",
+              "Title": "IPaymentService.cs",
+              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application\\Common\\Interfaces\\IPaymentService.cs",
+              "RelativeDocumentMoniker": "FacilityCare.Application\\Common\\Interfaces\\IPaymentService.cs",
+              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application\\Common\\Interfaces\\IPaymentService.cs",
+              "RelativeToolTip": "FacilityCare.Application\\Common\\Interfaces\\IPaymentService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T17:54:38.56Z",
+              "WhenOpened": "2026-05-22T11:51:21.98Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "IServiceRequestService.cs",
-              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application\\Common\\Interfaces\\IServiceRequestService.cs",
-              "RelativeDocumentMoniker": "FacilityCare.Application\\Common\\Interfaces\\IServiceRequestService.cs",
-              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application\\Common\\Interfaces\\IServiceRequestService.cs",
-              "RelativeToolTip": "FacilityCare.Application\\Common\\Interfaces\\IServiceRequestService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "ServiceTypeService.cs",
+              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Services\\ServiceTypeService.cs",
+              "RelativeDocumentMoniker": "FacilityCare.Infrastructure\\Services\\ServiceTypeService.cs",
+              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Services\\ServiceTypeService.cs",
+              "RelativeToolTip": "FacilityCare.Infrastructure\\Services\\ServiceTypeService.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAIwEgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T17:54:29.459Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "DbSeeder.cs",
-              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Persistance\\DbSeeder.cs",
-              "RelativeDocumentMoniker": "FacilityCare.Infrastructure\\Persistance\\DbSeeder.cs",
-              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Persistance\\DbSeeder.cs",
-              "RelativeToolTip": "FacilityCare.Infrastructure\\Persistance\\DbSeeder.cs",
-              "ViewState": "AgIAAOgAAAAAAAAAAAAAAPoAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T17:49:06.988Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "BuildingsController.cs",
-              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.API\\Controllers\\BuildingsController.cs",
-              "RelativeDocumentMoniker": "FacilityCare.API\\Controllers\\BuildingsController.cs",
-              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.API\\Controllers\\BuildingsController.cs",
-              "RelativeToolTip": "FacilityCare.API\\Controllers\\BuildingsController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABEAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T17:34:29.443Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "IBuildingService.cs",
-              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application\\Common\\Interfaces\\IBuildingService.cs",
-              "RelativeDocumentMoniker": "FacilityCare.Application\\Common\\Interfaces\\IBuildingService.cs",
-              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application\\Common\\Interfaces\\IBuildingService.cs",
-              "RelativeToolTip": "FacilityCare.Application\\Common\\Interfaces\\IBuildingService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T17:34:15.84Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "BuildingService.cs",
-              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Services\\BuildingService.cs",
-              "RelativeDocumentMoniker": "FacilityCare.Infrastructure\\Services\\BuildingService.cs",
-              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Infrastructure\\Services\\BuildingService.cs",
-              "RelativeToolTip": "FacilityCare.Infrastructure\\Services\\BuildingService.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAQwBUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T17:22:21.171Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "BuildingDto.cs",
-              "DocumentMoniker": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application\\DTOs\\Buildings\\BuildingDto.cs",
-              "RelativeDocumentMoniker": "FacilityCare.Application\\DTOs\\Buildings\\BuildingDto.cs",
-              "ToolTip": "C:\\Users\\alexs\\Desktop\\Development\\Web\\Facility-Care\\backend-core\\FacilityCare\\FacilityCare.Application\\DTOs\\Buildings\\BuildingDto.cs",
-              "RelativeToolTip": "FacilityCare.Application\\DTOs\\Buildings\\BuildingDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAApAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-21T17:22:10.729Z",
+              "WhenOpened": "2026-05-22T11:40:47.336Z",
               "EditorCaption": ""
             }
           ]

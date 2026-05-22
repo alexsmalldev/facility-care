@@ -36,7 +36,7 @@ const Notifications = ({ openNotifications, setOpenNotifications }) => {
   };
 
   const handleNotificationOnClick = async (notification) => {
-    const path = await markNotificationAsRead(notification.id, notification.service_request);
+    const path = await markNotificationAsRead(notification.id, notification.serviceRequestId);
     if (path) {
       setOpenNotifications(false);
       navigate(path);
@@ -74,7 +74,7 @@ const Notifications = ({ openNotifications, setOpenNotifications }) => {
                       <div className="flex flex-row justify-end mx-4">
                         <button
                           type="button"
-                          disabled={!notificationItems.some(item => item.is_read === false)}
+                          disabled={!notificationItems.some(item => item.isRead === false)}
                           onClick={handleMarkAllRead}
                           className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                         >
@@ -92,9 +92,9 @@ const Notifications = ({ openNotifications, setOpenNotifications }) => {
                                 <p className="text-sm font-semibold text-gray-900">{item.title}</p>
 
                               </div>
-                              <p className="text-xs text-gray-500">{formatCreatedDate(item.created_date)}</p>
+                              <p className="text-xs text-gray-500">{formatCreatedDate(item.createdDate)}</p>
                             </div>
-                            {item.is_read == false ? <span className="flex h-2 w-2 translate-y-1 rounded-full bg-red-600" /> : null}
+                            {item.isRead == false ? <span className="flex h-2 w-2 translate-y-1 rounded-full bg-red-600" /> : null}
                           </li>
                         ))}
                       </ul>

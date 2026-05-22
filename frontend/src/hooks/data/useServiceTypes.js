@@ -1,14 +1,9 @@
-// External libraries
 import { useState, useEffect, useCallback } from 'react';
 import { debounce } from 'lodash';
-
-// Internal
 import api from '../../api/apiConfig';
 import { useNotification } from '../../contexts/NotificationContext';
 import { useLoading } from '../../contexts/LoadingContext';
 
-
-// service type crud and state manafgement - handles dialog
 export const useServiceTypes = () => {
     const { showLoading, hideLoading } = useLoading();
     const { triggerNotification, triggerErrorDialog } = useNotification();
@@ -33,10 +28,9 @@ export const useServiceTypes = () => {
     };
 
     const fetchServiceTypes = async (searchQuery) => {
-        debugger;
         showLoading('Fetching Service Types...');
         try {
-            const endpoint = searchQuery ? `/ServiceTypes/?search=${searchQuery}` : '/ServiceTypes/';
+            const endpoint = searchQuery ? `/ServiceTypes?search=${searchQuery}` : '/ServiceTypes';
             const response = await api.get(endpoint);
             setServiceTypes(response.data.results || response.data);
         } catch (error) {
@@ -52,6 +46,11 @@ export const useServiceTypes = () => {
         formData.append('name', serviceTypeData.name);
         formData.append('description', serviceTypeData.description);
         formData.append('isActive', serviceTypeData.isActive);
+        formData.append('isPaid', serviceTypeData.isPaid);
+
+        if (!isUpdate && serviceTypeData.isPaid && serviceTypeData.price) {
+            formData.append('price', serviceTypeData.price);
+        }
 
         if (serviceTypeData.serviceIcon instanceof File) {
             formData.append('serviceIcon', serviceTypeData.serviceIcon);
@@ -59,13 +58,12 @@ export const useServiceTypes = () => {
 
         try {
             if (isUpdate) {
-                await api.put(`/ServiceTypes/${serviceTypeData.id}/`, formData);
+                await api.put(`/ServiceTypes/${serviceTypeData.id}`, formData);
                 triggerNotification('SUCCESS', 'Operation Success', `${serviceTypeData.name} has been updated`);
             } else {
-                await api.post('/ServiceTypes/', formData);
+                await api.post('/ServiceTypes', formData);
                 triggerNotification('SUCCESS', 'Operation Success', `${serviceTypeData.name} has been created`);
             }
-
             fetchServiceTypes(query);
         } catch (error) {
             triggerErrorDialog('Error Saving Service Type', 'OK', () => {});
@@ -77,7 +75,7 @@ export const useServiceTypes = () => {
     const fetchServiceTypeById = async (id) => {
         showLoading('Fetching Service Type Data...');
         try {
-            const response = await api.get(`/ServiceTypes/${id}/`);
+            const response = await api.get(`/ServiceTypes/${id}`);
             setSelectedServiceType(response.data);
             setDialogOpen(true);
         } catch (error) {

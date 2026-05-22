@@ -1,5 +1,6 @@
 ﻿using FacilityCare.Application.Common.Interfaces;
 using FacilityCare.Application.DTOs.ServiceRequests;
+using FacilityCare.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -12,10 +13,12 @@ namespace FacilityCare.API.Controllers;
 public class ServiceRequestsController : ControllerBase
 {
     private readonly IServiceRequestService _serviceRequestService;
+    private readonly IPaymentService _paymentService;
 
-    public ServiceRequestsController(IServiceRequestService serviceRequestService)
+    public ServiceRequestsController(IServiceRequestService serviceRequestService, IPaymentService paymentService)
     {
         _serviceRequestService = serviceRequestService;
+        _paymentService = paymentService;
     }
 
     [HttpGet]
@@ -113,6 +116,51 @@ public class ServiceRequestsController : ControllerBase
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
             var result = await _serviceRequestService.GetUserHomeDataAsync(userId);
             return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpPost("{id}/create-payment-intent")]
+    public async Task<IActionResult> CreatePaymentIntent(int id)
+    {
+        try
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var isAdmin = User.IsInRole("Admin");
+            var clientSecret = await _paymentService.CreatePaymentIntentAsync(id);
+            return Ok(new { clientSecret });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpPost("create-payment-intent")]
+    public async Task<IActionResult> CreatePaymentIntent([FromBody] CreateServiceRequestRequest request)
+    {
+        try
+        {
+            var clientSecret = await _paymentService.CreatePaymentIntentForServiceAsync(request.ServiceTypeId);
+            return Ok(new { clientSecret });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpPost("{id}/refund")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> RefundPayment(int id)
+    {
+        try
+        {
+            await _paymentService.RefundPaymentAsync(id);
+            return Ok(new { message = "Payment refunded successfully." });
         }
         catch (Exception ex)
         {

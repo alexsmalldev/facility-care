@@ -14,16 +14,16 @@ import { useMyRequests } from '../../../hooks/data/useMyRequests';
 import { useServiceTypes } from '../../../hooks/data/useServiceTypes';
 
 const statusOptions = [
-    { name: 'Open', id: 'open' },
-    { name: 'In-Progress', id: 'in_progress' },
-    { name: 'Completed', id: 'completed' },
-    { name: 'Cancelled', id: 'cancelled' },
+    { name: 'Open', id: 'Open' },
+    { name: 'In-Progress', id: 'InProgress' },
+    { name: 'Completed', id: 'Completed' },
+    { name: 'Cancelled', id: 'Cancelled' },
 ];
 
 const priorityOptions = [
-    { name: 'Low', id: 'low' },
-    { name: 'Medium', id: 'medium' },
-    { name: 'High', id: 'high' }
+    { name: 'Low', id: 'Low' },
+    { name: 'Medium', id: 'Medium' },
+    { name: 'High', id: 'High' }
 ];
 
 const MyRequests = () => {
@@ -38,8 +38,8 @@ const MyRequests = () => {
             <div className="mt-4 flex flex-row flex-wrap justify-start gap-2">
                 <FilterButton
                     options={user.buildings}
-                    selectedValue={filters.building}
-                    onSelect={(value) => updateFilter('building', value)}
+                    selectedValue={filters.buildingId}
+                    onSelect={(value) => updateFilter('buildingId', value)}
                     placeholder="Any Building"
                     showSearch={true}
                     emptyText={"No Buildings found"}
@@ -47,8 +47,8 @@ const MyRequests = () => {
                 />
                 <FilterButton
                     options={serviceTypes}
-                    selectedValue={filters.service_request_item}
-                    onSelect={(value) => updateFilter('service_request_item', value)}
+                    selectedValue={filters.serviceTypeId}
+                    onSelect={(value) => updateFilter('serviceTypeId', value)}
                     placeholder="Any Service"
                     showSearch={true}
                     emptyText={"No Service found"}

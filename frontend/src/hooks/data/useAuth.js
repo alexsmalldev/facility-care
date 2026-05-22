@@ -12,6 +12,7 @@ export const useAuth = () => {
     const { setUser } = useUser();
 
     const login = async (credentials) => {
+        debugger;
         try {
             showLoading('Logging in...');
             const response = await api.post('/auth/login', credentials);
@@ -19,7 +20,12 @@ export const useAuth = () => {
 
             setToken(access);
             const user = decodeToken(access);
-            setUser(user);
+            if (user.user_type === 'regular') {
+                const buildingsResponse = await api.get('/Buildings');
+                setUser({ ...user, buildings: buildingsResponse.data });
+            } else {
+                setUser(user);
+            }
             navigate('/');
         } catch (error) {
             removeToken();

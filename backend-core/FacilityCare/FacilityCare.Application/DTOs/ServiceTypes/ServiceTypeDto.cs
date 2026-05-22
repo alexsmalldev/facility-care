@@ -7,4 +7,6 @@ public class ServiceTypeDto
     public string Description { get; set; } = string.Empty;
     public string? ServiceIcon { get; set; }
     public bool IsActive { get; set; }
+    public bool IsPaid { get; set; }
+    public decimal? Price { get; set; }
 }

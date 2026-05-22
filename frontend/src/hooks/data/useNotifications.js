@@ -38,7 +38,7 @@ export const useNotifications = () => {
     const markAllAsRead = async () => {
         showLoading('Marking All Read...');
         try {
-            await api.post(`updates/mark_all_read/`);
+            await api.post(`/Updates/mark-all-read`);
             await refreshNotifications();
         } catch (error) {
             console.error('Failed to mark notifications as read', error);
@@ -46,11 +46,11 @@ export const useNotifications = () => {
             hideLoading();
         }
     };
-
+    
     const markNotificationAsRead = async (notificationId, serviceRequestId) => {
         showLoading('Marking as Read...');
         try {
-            await api.post(`updates/${notificationId}/mark_read/`);
+            await api.post(`/Updates/${notificationId}/mark-read`);
             await refreshNotifications();
             return `/requests/${serviceRequestId}`;
         } catch (error) {

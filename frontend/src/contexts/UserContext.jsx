@@ -19,6 +19,7 @@ export const UserProvider = ({ children }) => {
 
     useEffect(() => {
         const restoreSession = async () => {
+            debugger;
             try {
                 // attempt to get a new access token using the refresh cookie
                 const response = await axios.post(
@@ -31,7 +32,15 @@ export const UserProvider = ({ children }) => {
                 setToken(access);
 
                 const decoded = decodeToken(access);
-                setUser(decoded);
+                if (decoded.user_type === 'regular') {
+                    const buildingsResponse = await axios.get(
+                        `${import.meta.env.VITE_API_URL}/Buildings`,
+                        { headers: { Authorization: `Bearer ${access}` } }
+                    );
+                    setUser({ ...decoded, buildings: buildingsResponse.data });
+                } else {
+                    setUser(decoded);
+                }
             } catch {
                 // no valid refresh cookie - user needs to login
                 removeToken();

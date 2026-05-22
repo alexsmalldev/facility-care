@@ -13,6 +13,8 @@ public class ServiceTypeConfiguration : IEntityTypeConfiguration<ServiceType>
         builder.Property(st => st.Name).HasMaxLength(255).IsRequired();
         builder.Property(st => st.Description).IsRequired();
         builder.Property(st => st.ServiceIcon).HasMaxLength(500);
+        builder.Property(st => st.IsPaid).IsRequired();
+        builder.Property(st => st.Price).HasPrecision(10, 2);
 
         builder.HasMany(st => st.ServiceRequests)
             .WithOne(sr => sr.ServiceType)

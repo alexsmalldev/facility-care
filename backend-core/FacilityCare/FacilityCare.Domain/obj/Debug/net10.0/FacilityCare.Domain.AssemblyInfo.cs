@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FacilityCare.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5467c586ee1d2429397a01e7c1635c897af9a717")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0982bace04b0cf3425707fbd075a767b22ee885")]
 [assembly: System.Reflection.AssemblyProductAttribute("FacilityCare.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FacilityCare.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

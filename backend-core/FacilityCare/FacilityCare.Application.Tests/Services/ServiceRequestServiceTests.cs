@@ -3,13 +3,16 @@ using FacilityCare.Domain.Entities;
 using FacilityCare.Domain.Enums;
 using FacilityCare.Infrastructure.Persistence;
 using FacilityCare.Infrastructure.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 
 namespace FacilityCare.Application.Tests.Services;
 
 public class ServiceRequestServiceTests
 {
     private readonly AppDbContext _context;
+    private readonly Mock<UserManager<ApplicationUser>> _userManagerMock;
     private readonly ServiceRequestService _serviceRequestService;
 
     public ServiceRequestServiceTests()
@@ -19,7 +22,14 @@ public class ServiceRequestServiceTests
             .Options;
 
         _context = new AppDbContext(options);
-        _serviceRequestService = new ServiceRequestService(_context);
+
+        _userManagerMock = new Mock<UserManager<ApplicationUser>>(
+            Mock.Of<IUserStore<ApplicationUser>>(), null, null, null, null, null, null, null, null);
+
+        _userManagerMock.Setup(u => u.FindByIdAsync(It.IsAny<string>()))
+            .ReturnsAsync(new ApplicationUser { FirstName = "Test", LastName = "User" });
+
+        _serviceRequestService = new ServiceRequestService(_context, _userManagerMock.Object);
 
         SeedData();
     }

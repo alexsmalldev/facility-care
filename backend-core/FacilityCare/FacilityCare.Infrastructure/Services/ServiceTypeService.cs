@@ -45,11 +45,16 @@ public class ServiceTypeService : IServiceTypeService
 
     public async Task<ServiceTypeDto> CreateAsync(CreateServiceTypeRequest request, IFormFile? icon)
     {
+        if (request.IsPaid && (request.Price == null || request.Price <= 0))
+            throw new Exception("A valid price must be provided for paid services.");
+
         var serviceType = new ServiceType
         {
             Name = request.Name,
             Description = request.Description,
-            IsActive = true
+            IsActive = true,
+            IsPaid = request.IsPaid,
+            Price = request.IsPaid ? request.Price : null
         };
 
         if (icon != null)
@@ -101,6 +106,8 @@ public class ServiceTypeService : IServiceTypeService
         Name = serviceType.Name,
         Description = serviceType.Description,
         ServiceIcon = serviceType.ServiceIcon,
-        IsActive = serviceType.IsActive
+        IsActive = serviceType.IsActive,
+        IsPaid = serviceType.IsPaid,
+        Price = serviceType.Price
     };
 }

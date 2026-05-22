@@ -263,7 +263,9 @@ public class ServiceRequestService : IServiceRequestService
                 Country = sr.Building.Country,
                 Latitude = sr.Building.Latitude,
                 Longitude = sr.Building.Longitude
-            }
+            },
+            PaymentStatus = sr.PaymentStatus.ToString(),
+            PaymentIntentId = sr.PaymentIntentId,
         };
     }
 }

@@ -1,20 +1,16 @@
-// External libraries
 import { useState, useEffect } from 'react';
-
-// Internal
 import api from '../../api/apiConfig';
 import { useNotification } from '../../contexts/NotificationContext';
 import { useLoading } from '../../contexts/LoadingContext';
 
-// users requests crud and state management
 export const useMyRequests = () => {
     const { showLoading, hideLoading } = useLoading();
     const { triggerNotification } = useNotification();
 
     const [userRequests, setUserRequests] = useState([]);
     const [filters, setFilters] = useState({
-        building: null,
-        service_request_item: null,
+        buildingId: null,
+        serviceTypeId: null,
         priority: null,
         status: null,
     });
@@ -29,7 +25,7 @@ export const useMyRequests = () => {
             }
         }
 
-        const endpoint = `/service-requests/${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+        const endpoint = `/ServiceRequests${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
 
         try {
             const response = await api.get(endpoint);

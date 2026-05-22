@@ -21,6 +21,12 @@ public class ServiceRequestConfiguration : IEntityTypeConfiguration<ServiceReque
             .HasMaxLength(20)
             .IsRequired();
 
+        builder.Property(sr => sr.PaymentStatus)
+            .HasConversion<string>()
+            .HasMaxLength(20)
+            .IsRequired();
+
+        builder.Property(sr => sr.PaymentIntentId).HasMaxLength(255);
         builder.Property(sr => sr.CreatedById).HasMaxLength(450).IsRequired();
         builder.Property(sr => sr.CustomerNotes).HasMaxLength(2000);
 

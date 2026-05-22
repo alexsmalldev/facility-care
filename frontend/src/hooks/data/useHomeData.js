@@ -17,9 +17,9 @@ export const useHomeData = () => {
     const fetchHomeData = async () => {
         showLoading('Fetching Home Data');
         try {
-            const response = await api.get('/service-requests/user_home_data/');
-            setRecentRequests(response.data.recent_requests);
-            setRecentServiceTypes(response.data.recent_service_types);
+            const response = await api.get('/ServiceRequests/user-home-data/');
+            setRecentRequests(response.data.recentRequests);
+            setRecentServiceTypes(response.data.recentServiceTypes);
         } catch (e) {
             triggerNotification('FAIL', 'Error fetching your requests', `Error: ${e.message}`);
         } finally {

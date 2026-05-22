@@ -24,6 +24,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
     try {
+      debugger;
       await login(values);
     } catch (error) {
       setFieldError('password', 'Invalid credentials');

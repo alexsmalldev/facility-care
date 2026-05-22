@@ -15,6 +15,8 @@ public class ServiceRequestDto
     public string CreatedById { get; set; } = string.Empty;
     public string CreatedByFirstName { get; set; } = string.Empty;
     public string CreatedByLastName { get; set; } = string.Empty;
+    public string PaymentStatus { get; set; } = string.Empty;
+    public string? PaymentIntentId { get; set; }
     public ServiceTypeDto ServiceType { get; set; } = null!;
     public BuildingDto Building { get; set; } = null!;
 }
