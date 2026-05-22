@@ -100,9 +100,9 @@ const LoginForm = () => {
                   <div className="bg-indigo-50 rounded-md p-3 mb-4 text-sm text-indigo-700">
                     <p className="font-semibold mb-2">Demo credentials</p>
                     <p className="font-medium">Admin</p>
-                    <p>Username: <span className="font-mono">demo_admin</span> · Password: <span className="font-mono">demo1234</span></p>
+                    <p>Username: <span className="font-mono">demo_admin</span> · Password: <span className="font-mono">Demo1234!</span></p>
                     <p className="font-medium mt-1">Customer</p>
-                    <p>Username: <span className="font-mono">demo_customer</span> · Password: <span className="font-mono">demo1234</span></p>
+                    <p>Username: <span className="font-mono">demo_customer</span> · Password: <span className="font-mono">Demo1234!</span></p>
                   </div>
                 </Form>
               )}
